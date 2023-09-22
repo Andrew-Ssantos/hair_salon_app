@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hair_salon_app/features/splash/splash_page.dart';
+import 'package:hair_salon_app/features/home/home_module.dart';
+import 'package:hair_salon_app/features/splash/splash_module.dart';
 
 class AppModule extends Module {
   @override
@@ -7,6 +8,7 @@ class AppModule extends Module {
 
   @override
   List<ModularRoute> get routes => [
-        ChildRoute('/', child: (context, args) => const SplashPage()),
+        ModuleRoute('/', module: SplashModule()),
+        ModuleRoute('/home/', module: HomeModule()),
       ];
 }
