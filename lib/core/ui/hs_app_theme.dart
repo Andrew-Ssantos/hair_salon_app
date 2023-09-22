@@ -17,6 +17,7 @@ sealed class HsAppTheme {
     drawerTheme: const DrawerThemeData(
       elevation: 2,
       shape: RoundedRectangleBorder(),
+      backgroundColor: Colors.white,
     ),
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(

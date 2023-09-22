@@ -26,9 +26,9 @@ sealed class HsIcons extends IconData {
     size: 24,
   );
 
-  static const homeIcon = Icon(Icons.home_outlined, size: 20);
-  static const scheduleIcon = Icon(Icons.calendar_month_outlined, size: 20);
-  static const dashboardIcon = Icon(Icons.bar_chart_outlined, size: 20);
-  static const servicesIcon = Icon(Icons.workspaces_outline, size: 20);
-  static const settingsIcon = Icon(Icons.settings_outlined, size: 20);
+  static const homeIcon = Icon(Icons.home_outlined, size: 25);
+  static const scheduleIcon = Icon(Icons.calendar_month_outlined, size: 25);
+  static const dashboardIcon = Icon(Icons.bar_chart_outlined, size: 25);
+  static const servicesIcon = Icon(Icons.workspaces_outline, size: 25);
+  static const settingsIcon = Icon(Icons.settings_outlined, size: 25);
 }
