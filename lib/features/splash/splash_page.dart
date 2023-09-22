@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hair_salon_app/core/ui/constants/constants.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:lottie/lottie.dart';
 
 class SplashPage extends StatefulWidget {
@@ -13,6 +14,9 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(seconds: 2)).then((_) {
+      Modular.to.pushReplacementNamed('/home/');
+    });
   }
 
   @override
