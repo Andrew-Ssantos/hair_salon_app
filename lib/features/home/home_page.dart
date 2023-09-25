@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
-import 'package:hair_salon_app/core/widgets/hs_bottom_navigation_bar.dart';
+import 'package:hair_salon_app/core/widgets/hs_bottom_navigation_bar/hs_bottom_navigation_bar.dart';
 import 'package:hair_salon_app/core/widgets/hs_drawer.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Tela inicial')),
       drawer: const HsDrawer(),
+
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
