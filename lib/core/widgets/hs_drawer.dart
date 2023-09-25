@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 
 class HsDrawer extends StatelessWidget {
@@ -24,14 +25,6 @@ class HsDrawer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               children: [
-                ListTile(
-                  leading: HsIcons.homeIcon,
-                  title: const Text(
-                    'Tela inicial',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  onTap: () {},
-                ),
                 const SizedBox(height: 5),
                 ListTile(
                   leading: HsIcons.servicesIcon,
@@ -39,7 +32,9 @@ class HsDrawer extends StatelessWidget {
                     'Serviços',
                     style: TextStyle(fontSize: 14),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Modular.to.pushNamed('/salon-service/');
+                  },
                 ),
                 const SizedBox(height: 5),
                 ListTile(
@@ -48,9 +43,10 @@ class HsDrawer extends StatelessWidget {
                     'Configurações',
                     style: TextStyle(fontSize: 14),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Modular.to.pushNamed('/settings/');
+                  },
                 ),
-                const SizedBox(height: 5),
               ],
             ),
           ),

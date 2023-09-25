@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 
 class HsBottomNavigationBar extends StatelessWidget {
-  final int currenteIndex;
+  final int currentIndex;
   final Function(int) onTap;
   const HsBottomNavigationBar({
     super.key,
-    required this.currenteIndex,
+    required this.currentIndex,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: currenteIndex,
+      currentIndex: currentIndex,
       onTap: onTap,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(

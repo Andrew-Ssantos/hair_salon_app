@@ -6,9 +6,7 @@ class SalonServicesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Serviços'),
-      ),
+      appBar: AppBar(title: const Text('Serviços')),
       body: Center(child: Text('SERVIÇOS')),
     );
   }
