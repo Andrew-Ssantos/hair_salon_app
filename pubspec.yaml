@@ -37,6 +37,8 @@ dependencies:
   flutter_modular: 5.0.3
   calendar_view: ^1.0.4
   lottie: ^2.6.0
+  asp: ^1.3.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
