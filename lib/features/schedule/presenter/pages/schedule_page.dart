@@ -12,14 +12,15 @@ class SchedulePage extends StatelessWidget {
       appBar: AppBar(title: const Text('Agenda')),
       drawer: const HsDrawer(),
       body: DayView(
-        timeLineWidth: 55,
+        timeLineWidth: 60,
         headerStyle: const HeaderStyle(
           decoration: BoxDecoration(color: ColorsConstants.green),
           headerTextStyle: TextStyle(fontWeight: FontWeight.bold),
         ),
         showHalfHours: true,
         hourIndicatorSettings: const HourIndicatorSettings(offset: 10),
-        halfHourIndicatorSettings: HourIndicatorSettings(
+        halfHourIndicatorSettings: const HourIndicatorSettings(
+          lineStyle: LineStyle.dashed,
           color: ColorsConstants.ligthGrey,
           offset: 10,
         ),

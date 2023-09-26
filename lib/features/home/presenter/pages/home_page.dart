@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
                 SingleChildScrollView(
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.65,
+                    height: MediaQuery.of(context).size.height * 0.62,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       border: Border.all(width: 1, color: ColorsConstants.grey),

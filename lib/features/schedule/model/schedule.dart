@@ -1,7 +1,7 @@
 import 'package:hair_salon_app/features/salon_services/model/salon_services.dart';
 
 class Schedule {
-  final String id;
+  final int id;
   final String clientName;
   final DateTime date;
   final double startHour;

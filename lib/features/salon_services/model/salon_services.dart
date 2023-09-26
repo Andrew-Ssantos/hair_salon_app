@@ -1,5 +1,5 @@
 class SalonServices {
-  final String id;
+  final int id;
   final String serviceName;
   final double price;
 
