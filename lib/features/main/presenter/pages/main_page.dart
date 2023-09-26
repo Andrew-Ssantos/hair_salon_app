@@ -4,7 +4,7 @@ import 'package:hair_salon_app/core/widgets/hs_bottom_navigation_bar/atom/hs_bot
 import 'package:hair_salon_app/core/widgets/hs_bottom_navigation_bar/hs_bottom_navigation_bar.dart';
 import 'package:hair_salon_app/core/widgets/hs_drawer.dart';
 import 'package:hair_salon_app/features/dashboard/dashboard_page.dart';
-import 'package:hair_salon_app/features/home/home_page.dart';
+import 'package:hair_salon_app/features/home/presenter/pages/home_page.dart';
 import 'package:hair_salon_app/features/schedule/presenter/pages/schedule_page.dart';
 
 class MainPage extends StatefulWidget {
