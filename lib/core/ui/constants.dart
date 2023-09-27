@@ -16,7 +16,7 @@ sealed class HsIcons extends IconData {
 
   static const editIcon = Icon(
     Icons.edit,
-    color: ColorsConstants.ligthGreen,
+    color: ColorsConstants.green,
     size: 24,
   );
 

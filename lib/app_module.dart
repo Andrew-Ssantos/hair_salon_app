@@ -17,6 +17,7 @@ class AppModule extends Module {
         ModuleRoute('/main/', module: MainModule()),
         ModuleRoute('/home/', module: HomeModule()),
         ModuleRoute('/schedule/', module: ScheduleModule()),
+        ModuleRoute('/schedule-client/', module: ScheduleModule()),
         ModuleRoute('/dashboard/', module: DashboardModule()),
         ModuleRoute('/salon-service/', module: SalonServicesModule()),
         ModuleRoute('/settings/', module: SettingsModule()),

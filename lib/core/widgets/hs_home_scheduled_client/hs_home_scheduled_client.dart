@@ -15,6 +15,7 @@ class HsHomeScheduledClient extends StatelessWidget {
       {'name': 'Luciana', 'hour': '6:30', 'service': 'Corte Feminino'},
       {'name': 'Marcelo Caetano', 'hour': '18:00', 'service': 'Corte Masculino'},
       {'name': 'Maura Gomes Araujo', 'hour': '18:30', 'service': 'Escova'},
+      {'name': 'Mario', 'hour': '17:30', 'service': 'Nevou na BARBA + Degrade'},
     ];
 
     return ListView(

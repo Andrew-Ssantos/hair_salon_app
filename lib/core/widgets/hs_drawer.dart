@@ -44,7 +44,7 @@ class HsDrawer extends StatelessWidget {
                     style: TextStyle(fontSize: 14),
                   ),
                   onTap: () {
-                    Modular.to.pushNamed('/settings/');
+                    Modular.to.pushNamed('/schedule/schedule-client/');
                   },
                 ),
               ],
