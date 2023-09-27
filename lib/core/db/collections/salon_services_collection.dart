@@ -1,10 +1,11 @@
 import 'package:isar/isar.dart';
 
-// part 'salon_services_collection.g.dart';
+part 'salon_services_collection.g.dart';
 
-@Collection()
+@embedded
+@collection
 class SalonServicesCollection {
   Id id = Isar.autoIncrement;
-  late String serviceName;
-  late double price;
+  String? serviceName;
+  double? price;
 }
