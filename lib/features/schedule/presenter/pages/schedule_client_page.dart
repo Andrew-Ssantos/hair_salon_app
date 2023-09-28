@@ -18,64 +18,102 @@ class ScheduleClientPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Agendar cliente'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                // icon: Icon(Icons.person),
-                contentPadding: EdgeInsets.only(left: 10),
-                labelText: 'Cliente',
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                // icon: HsIcons.scheduleIcon,
-                contentPadding: EdgeInsets.only(left: 10),
-                labelText: 'Selecione a data',
-              ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Horário Inicial',
-                    constraints: BoxConstraints.tightFor(),
-                  ),
+      body: SafeArea(
+        child: CustomScrollView(
+          reverse: true,
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Padding(
+                padding: const EdgeInsets.all(15),
+                child: Stack(
+                  children: [
+                    Column(
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            // icon: Icon(Icons.person),
+                            contentPadding: EdgeInsets.only(left: 10),
+                            labelText: 'Cliente',
+                            labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          keyboardType: TextInputType.datetime,
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.only(left: 10),
+                            labelText: 'Selecione a data',
+                            labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                  labelText: 'Horário Inicial',
+                                  labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                  labelText: 'Horário Final',
+                                  labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          keyboardType: TextInputType.phone,
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.only(left: 10),
+                            labelText: 'Whatsapp',
+                            labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        TextFormField(
+                          decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.only(left: 10),
+                            labelText: 'Serviço',
+                            labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        // TextFormField(
+                        //   decoration: const InputDecoration(
+                        //     contentPadding: EdgeInsets.only(left: 10),
+                        //     labelText: 'Valor',
+                        //     labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorsConstants.ligthGreen,
+                          foregroundColor: ColorsConstants.purple,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                        ),
+                        child: const Text('AGENDAR'),
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
                 ),
-                // const SizedBox(width: 10),
-                // TextFormField(
-                //   decoration: const InputDecoration(
-                //     labelText: 'Horário Final',
-                //     constraints: BoxConstraints.tightFor(),
-                //   ),
-                // ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Whatsapp',
-                contentPadding: EdgeInsets.only(left: 10),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Serviço',
-                contentPadding: EdgeInsets.only(left: 10),
-              ),
-            ),
-            const SizedBox(height: 10),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Valor',
-                contentPadding: EdgeInsets.only(left: 10),
               ),
             )
           ],

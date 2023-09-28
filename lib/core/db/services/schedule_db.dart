@@ -9,6 +9,5 @@ class ScheduleDb {
       [ScheduleCollectionSchema],
       directory: dir.path,
     );
-    print(db);
   }
 }

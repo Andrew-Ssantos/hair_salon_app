@@ -17,10 +17,11 @@ class HomePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.12,
-                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.11,
+                  width: MediaQuery.of(context).size.width * 0.7,
                   decoration: BoxDecoration(
                     border: Border.all(width: 1, color: ColorsConstants.grey),
                     borderRadius: BorderRadius.circular(5),
@@ -30,13 +31,13 @@ class HomePage extends StatelessWidget {
                     children: [
                       const Text(
                         'Clientes agendados hoje:',
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(fontSize: 14),
                       ),
                       const Text(
                         '7',
                         style: TextStyle(
                           color: ColorsConstants.purple,
-                          fontSize: 35,
+                          fontSize: 37,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -46,7 +47,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 20),
                 SingleChildScrollView(
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.62,
+                    height: MediaQuery.of(context).size.height * 0.60,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       border: Border.all(width: 1, color: ColorsConstants.grey),
