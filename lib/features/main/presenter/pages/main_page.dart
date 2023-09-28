@@ -34,12 +34,18 @@ class _MainPageState extends State<MainPage> {
           },
         ),
       ),
-      body: PageView(
-        controller: pageController,
-        children: const [
-          HomePage(),
-          SchedulePage(),
-          DashboardPage(),
+      body: Column(
+        children: [
+          Expanded(
+            child: PageView(
+              controller: pageController,
+              children: const [
+                HomePage(),
+                SchedulePage(),
+                DashboardPage(),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -26,15 +26,18 @@ class HsHomeScheduledClient extends StatelessWidget {
         contentPadding: const EdgeInsets.all(0),
         title: Text(
           e['name'],
-          style: const TextStyle(fontSize: 15),
+          style: const TextStyle(fontSize: 16),
         ),
         subtitle: Text(
           e['service'],
-          style: const TextStyle(color: ColorsConstants.grey),
+          style: const TextStyle(
+            color: ColorsConstants.grey,
+            fontSize: 15,
+          ),
         ),
         trailing: Text(
           e['hour'],
-          style: const TextStyle(fontSize: 14),
+          style: const TextStyle(fontSize: 16),
         ),
         onTap: () {},
       );

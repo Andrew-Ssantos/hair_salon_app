@@ -27,6 +27,7 @@ class ScheduleClientPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Stack(
+                  alignment: Alignment.center,
                   children: [
                     Column(
                       // mainAxisSize: MainAxisSize.min,
