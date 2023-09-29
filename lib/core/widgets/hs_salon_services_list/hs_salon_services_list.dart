@@ -47,7 +47,42 @@ class HsSalonServicesList extends StatelessWidget {
                   InkWell(
                     splashColor: ColorsConstants.ligthPurple.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(5),
-                    onTap: () {},
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                            title: const Text(
+                              'Excluir serviço',
+                              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                            ),
+                            content: const Text('Confirma a exclusão do serviço?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'CONFIRMAR',
+                                  style: TextStyle(color: ColorsConstants.red),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'CANCELAR',
+                                  style: TextStyle(color: ColorsConstants.purple),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     child: HsIcons.deleteIcon,
                   ),
                   // IconButton(

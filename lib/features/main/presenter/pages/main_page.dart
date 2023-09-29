@@ -31,6 +31,7 @@ class _MainPageState extends State<MainPage> {
               duration: const Duration(milliseconds: 200),
               curve: Curves.bounceInOut,
             );
+            setState(() {});
           },
         ),
       ),
