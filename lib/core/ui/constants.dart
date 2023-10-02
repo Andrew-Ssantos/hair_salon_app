@@ -17,13 +17,13 @@ sealed class HsIcons extends IconData {
   static const editIcon = Icon(
     Icons.edit,
     color: ColorsConstants.green,
-    size: 24,
+    size: 25,
   );
 
   static const deleteIcon = Icon(
     Icons.delete,
     color: ColorsConstants.red,
-    size: 24,
+    size: 25,
   );
 
   static const homeIcon = Icon(Icons.home_outlined, size: 25);

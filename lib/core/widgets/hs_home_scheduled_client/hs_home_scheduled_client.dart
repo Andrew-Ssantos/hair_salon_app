@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
+import 'package:hair_salon_app/core/widgets/hs_client_modal/hs_client_modal.dart';
 
 class HsHomeScheduledClient extends StatelessWidget {
   const HsHomeScheduledClient({super.key});
@@ -39,7 +40,9 @@ class HsHomeScheduledClient extends StatelessWidget {
           e['hour'],
           style: const TextStyle(fontSize: 16),
         ),
-        onTap: () {},
+        onTap: () {
+          HsClientModal().showClientModel(context);
+        },
       );
     }).toList());
   }

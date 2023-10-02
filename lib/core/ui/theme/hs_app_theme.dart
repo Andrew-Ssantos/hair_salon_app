@@ -21,7 +21,10 @@ sealed class HsAppTheme {
     ),
     scaffoldBackgroundColor: Colors.white,
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(minimumSize: const Size.fromHeight(44)),
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size.fromHeight(44),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: ColorsConstants.ligthPurple,

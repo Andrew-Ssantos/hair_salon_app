@@ -107,7 +107,6 @@ class ScheduleClientPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: ColorsConstants.ligthGreen,
                           foregroundColor: ColorsConstants.purple,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                         ),
                         child: const Text('AGENDAR'),
                         onPressed: () {},

@@ -19,13 +19,9 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.11,
                   width: MediaQuery.of(context).size.width * 0.7,
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: ColorsConstants.grey),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
