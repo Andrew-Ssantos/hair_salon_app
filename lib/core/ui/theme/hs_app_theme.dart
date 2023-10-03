@@ -26,6 +26,11 @@ sealed class HsAppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      ),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: ColorsConstants.ligthPurple,
       selectedItemColor: ColorsConstants.ligthGreen,
