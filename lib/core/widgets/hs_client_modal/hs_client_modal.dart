@@ -14,7 +14,7 @@ class HsClientModal {
           scrollable: true,
           actionsPadding: const EdgeInsets.all(10),
           content: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(15),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -33,7 +33,7 @@ class HsClientModal {
                       'Whatsapp: ',
                       style: TextStyle(fontWeight: FontWeight.w500),
                     ),
-                    Text('15 988268010'),
+                    Text('(15) 98826-8010'),
                   ],
                 ),
                 Row(
@@ -69,11 +69,10 @@ class HsClientModal {
                         style: TextStyle(color: Colors.black, fontSize: 15),
                       ),
                       SizedBox(
-                        height: 19,
-                        width: 19,
+                        width: 22,
                         child: SvgPicture.asset(
-                          alignment: Alignment.center,
-                          fit: BoxFit.scaleDown,
+                          height: 20,
+                          alignment: Alignment.centerLeft,
                           'lib/core/assets/icons/whatsapp.svg',
                         ),
                       )
