@@ -1,4 +1,4 @@
-import 'package:hair_salon_app/features/salon_services/model/salon_services.dart';
+import 'package:hair_salon_app/core/db/collections/salon_services_collection.dart';
 import 'package:isar/isar.dart';
 
 part 'schedule_collection.g.dart';
@@ -10,7 +10,8 @@ class ScheduleCollection {
   DateTime? date;
   double? startHour;
   double? endHour;
-  String? phone;
-  SalonServices? services;
+  String? whatsappNumber;
+  final services = IsarLinks<SalonServicesCollection>();
   double? price;
+  bool? isServiceFinished;
 }

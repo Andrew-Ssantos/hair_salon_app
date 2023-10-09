@@ -33,10 +33,10 @@ const ScheduleCollectionSchema = CollectionSchema(
       name: r'endHour',
       type: IsarType.double,
     ),
-    r'phone': PropertySchema(
+    r'isServiceFinished': PropertySchema(
       id: 3,
-      name: r'phone',
-      type: IsarType.string,
+      name: r'isServiceFinished',
+      type: IsarType.bool,
     ),
     r'price': PropertySchema(
       id: 4,
@@ -47,6 +47,11 @@ const ScheduleCollectionSchema = CollectionSchema(
       id: 5,
       name: r'startHour',
       type: IsarType.double,
+    ),
+    r'whatsappNumber': PropertySchema(
+      id: 6,
+      name: r'whatsappNumber',
+      type: IsarType.string,
     )
   },
   estimateSize: _scheduleCollectionEstimateSize,
@@ -55,7 +60,14 @@ const ScheduleCollectionSchema = CollectionSchema(
   deserializeProp: _scheduleCollectionDeserializeProp,
   idName: r'id',
   indexes: {},
-  links: {},
+  links: {
+    r'services': LinkSchema(
+      id: -2732792521210690393,
+      name: r'services',
+      target: r'SalonServicesCollection',
+      single: false,
+    )
+  },
   embeddedSchemas: {},
   getId: _scheduleCollectionGetId,
   getLinks: _scheduleCollectionGetLinks,
@@ -76,7 +88,7 @@ int _scheduleCollectionEstimateSize(
     }
   }
   {
-    final value = object.phone;
+    final value = object.whatsappNumber;
     if (value != null) {
       bytesCount += 3 + value.length * 3;
     }
@@ -93,9 +105,10 @@ void _scheduleCollectionSerialize(
   writer.writeString(offsets[0], object.clientName);
   writer.writeDateTime(offsets[1], object.date);
   writer.writeDouble(offsets[2], object.endHour);
-  writer.writeString(offsets[3], object.phone);
+  writer.writeBool(offsets[3], object.isServiceFinished);
   writer.writeDouble(offsets[4], object.price);
   writer.writeDouble(offsets[5], object.startHour);
+  writer.writeString(offsets[6], object.whatsappNumber);
 }
 
 ScheduleCollection _scheduleCollectionDeserialize(
@@ -109,9 +122,10 @@ ScheduleCollection _scheduleCollectionDeserialize(
   object.date = reader.readDateTimeOrNull(offsets[1]);
   object.endHour = reader.readDoubleOrNull(offsets[2]);
   object.id = id;
-  object.phone = reader.readStringOrNull(offsets[3]);
+  object.isServiceFinished = reader.readBoolOrNull(offsets[3]);
   object.price = reader.readDoubleOrNull(offsets[4]);
   object.startHour = reader.readDoubleOrNull(offsets[5]);
+  object.whatsappNumber = reader.readStringOrNull(offsets[6]);
   return object;
 }
 
@@ -129,11 +143,13 @@ P _scheduleCollectionDeserializeProp<P>(
     case 2:
       return (reader.readDoubleOrNull(offset)) as P;
     case 3:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 4:
       return (reader.readDoubleOrNull(offset)) as P;
     case 5:
       return (reader.readDoubleOrNull(offset)) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -145,12 +161,14 @@ Id _scheduleCollectionGetId(ScheduleCollection object) {
 
 List<IsarLinkBase<dynamic>> _scheduleCollectionGetLinks(
     ScheduleCollection object) {
-  return [];
+  return [object.services];
 }
 
 void _scheduleCollectionAttach(
     IsarCollection<dynamic> col, Id id, ScheduleCollection object) {
   object.id = id;
+  object.services.attach(
+      col, col.isar.collection<SalonServicesCollection>(), r'services', id);
 }
 
 extension ScheduleCollectionQueryWhereSort
@@ -604,155 +622,29 @@ extension ScheduleCollectionQueryFilter
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneIsNull() {
+      isServiceFinishedIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'phone',
+        property: r'isServiceFinished',
       ));
     });
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneIsNotNull() {
+      isServiceFinishedIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'phone',
+        property: r'isServiceFinished',
       ));
     });
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneEqualTo(
-    String? value, {
-    bool caseSensitive = true,
-  }) {
+      isServiceFinishedEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'phone',
+        property: r'isServiceFinished',
         value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneGreaterThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'phone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneLessThan(
-    String? value, {
-    bool include = false,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'phone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneBetween(
-    String? lower,
-    String? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'phone',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneStartsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'phone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneEndsWith(
-    String value, {
-    bool caseSensitive = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'phone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneContains(String value, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.contains(
-        property: r'phone',
-        value: value,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneMatches(String pattern, {bool caseSensitive = true}) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.matches(
-        property: r'phone',
-        wildcard: pattern,
-        caseSensitive: caseSensitive,
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneIsEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'phone',
-        value: '',
-      ));
-    });
-  }
-
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      phoneIsNotEmpty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'phone',
-        value: '',
       ));
     });
   }
@@ -924,13 +816,228 @@ extension ScheduleCollectionQueryFilter
       ));
     });
   }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'whatsappNumber',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'whatsappNumber',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'whatsappNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'whatsappNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'whatsappNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'whatsappNumber',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'whatsappNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'whatsappNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'whatsappNumber',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'whatsappNumber',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'whatsappNumber',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      whatsappNumberIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'whatsappNumber',
+        value: '',
+      ));
+    });
+  }
 }
 
 extension ScheduleCollectionQueryObject
     on QueryBuilder<ScheduleCollection, ScheduleCollection, QFilterCondition> {}
 
 extension ScheduleCollectionQueryLinks
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QFilterCondition> {}
+    on QueryBuilder<ScheduleCollection, ScheduleCollection, QFilterCondition> {
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      services(FilterQuery<SalonServicesCollection> q) {
+    return QueryBuilder.apply(this, (query) {
+      return query.link(q, r'services');
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      servicesLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'services', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      servicesIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'services', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      servicesIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'services', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      servicesLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'services', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      servicesLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'services', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+      servicesLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'services', lower, includeLower, upper, includeUpper);
+    });
+  }
+}
 
 extension ScheduleCollectionQuerySortBy
     on QueryBuilder<ScheduleCollection, ScheduleCollection, QSortBy> {
@@ -977,16 +1084,16 @@ extension ScheduleCollectionQuerySortBy
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByPhone() {
+      sortByIsServiceFinished() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'phone', Sort.asc);
+      return query.addSortBy(r'isServiceFinished', Sort.asc);
     });
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByPhoneDesc() {
+      sortByIsServiceFinishedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'phone', Sort.desc);
+      return query.addSortBy(r'isServiceFinished', Sort.desc);
     });
   }
 
@@ -1015,6 +1122,20 @@ extension ScheduleCollectionQuerySortBy
       sortByStartHourDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startHour', Sort.desc);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
+      sortByWhatsappNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'whatsappNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
+      sortByWhatsappNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'whatsappNumber', Sort.desc);
     });
   }
 }
@@ -1078,16 +1199,16 @@ extension ScheduleCollectionQuerySortThenBy
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByPhone() {
+      thenByIsServiceFinished() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'phone', Sort.asc);
+      return query.addSortBy(r'isServiceFinished', Sort.asc);
     });
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByPhoneDesc() {
+      thenByIsServiceFinishedDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'phone', Sort.desc);
+      return query.addSortBy(r'isServiceFinished', Sort.desc);
     });
   }
 
@@ -1118,6 +1239,20 @@ extension ScheduleCollectionQuerySortThenBy
       return query.addSortBy(r'startHour', Sort.desc);
     });
   }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
+      thenByWhatsappNumber() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'whatsappNumber', Sort.asc);
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
+      thenByWhatsappNumberDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'whatsappNumber', Sort.desc);
+    });
+  }
 }
 
 extension ScheduleCollectionQueryWhereDistinct
@@ -1144,9 +1279,9 @@ extension ScheduleCollectionQueryWhereDistinct
   }
 
   QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByPhone({bool caseSensitive = true}) {
+      distinctByIsServiceFinished() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'phone', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'isServiceFinished');
     });
   }
 
@@ -1161,6 +1296,14 @@ extension ScheduleCollectionQueryWhereDistinct
       distinctByStartHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startHour');
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
+      distinctByWhatsappNumber({bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'whatsappNumber',
+          caseSensitive: caseSensitive);
     });
   }
 }
@@ -1193,9 +1336,10 @@ extension ScheduleCollectionQueryProperty
     });
   }
 
-  QueryBuilder<ScheduleCollection, String?, QQueryOperations> phoneProperty() {
+  QueryBuilder<ScheduleCollection, bool?, QQueryOperations>
+      isServiceFinishedProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'phone');
+      return query.addPropertyName(r'isServiceFinished');
     });
   }
 
@@ -1209,6 +1353,13 @@ extension ScheduleCollectionQueryProperty
       startHourProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'startHour');
+    });
+  }
+
+  QueryBuilder<ScheduleCollection, String?, QQueryOperations>
+      whatsappNumberProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'whatsappNumber');
     });
   }
 }
