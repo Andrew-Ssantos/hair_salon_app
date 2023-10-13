@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'salon_services_collection.dart';
+part of 'salon_service.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,14 +9,13 @@ part of 'salon_services_collection.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetSalonServicesCollectionCollection on Isar {
-  IsarCollection<SalonServicesCollection> get salonServicesCollections =>
-      this.collection();
+extension GetSalonServiceCollection on Isar {
+  IsarCollection<SalonService> get salonServices => this.collection();
 }
 
-const SalonServicesCollectionSchema = CollectionSchema(
-  name: r'SalonServicesCollection',
-  id: 5725497129319470435,
+const SalonServiceSchema = CollectionSchema(
+  name: r'SalonService',
+  id: 94036142068362722,
   properties: {
     r'price': PropertySchema(
       id: 0,
@@ -29,22 +28,22 @@ const SalonServicesCollectionSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _salonServicesCollectionEstimateSize,
-  serialize: _salonServicesCollectionSerialize,
-  deserialize: _salonServicesCollectionDeserialize,
-  deserializeProp: _salonServicesCollectionDeserializeProp,
+  estimateSize: _salonServiceEstimateSize,
+  serialize: _salonServiceSerialize,
+  deserialize: _salonServiceDeserialize,
+  deserializeProp: _salonServiceDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {},
   embeddedSchemas: {},
-  getId: _salonServicesCollectionGetId,
-  getLinks: _salonServicesCollectionGetLinks,
-  attach: _salonServicesCollectionAttach,
+  getId: _salonServiceGetId,
+  getLinks: _salonServiceGetLinks,
+  attach: _salonServiceAttach,
   version: '3.1.0+1',
 );
 
-int _salonServicesCollectionEstimateSize(
-  SalonServicesCollection object,
+int _salonServiceEstimateSize(
+  SalonService object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -58,8 +57,8 @@ int _salonServicesCollectionEstimateSize(
   return bytesCount;
 }
 
-void _salonServicesCollectionSerialize(
-  SalonServicesCollection object,
+void _salonServiceSerialize(
+  SalonService object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -68,20 +67,20 @@ void _salonServicesCollectionSerialize(
   writer.writeString(offsets[1], object.serviceName);
 }
 
-SalonServicesCollection _salonServicesCollectionDeserialize(
+SalonService _salonServiceDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = SalonServicesCollection();
+  final object = SalonService();
   object.id = id;
   object.price = reader.readDoubleOrNull(offsets[0]);
   object.serviceName = reader.readStringOrNull(offsets[1]);
   return object;
 }
 
-P _salonServicesCollectionDeserializeProp<P>(
+P _salonServiceDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -97,34 +96,31 @@ P _salonServicesCollectionDeserializeProp<P>(
   }
 }
 
-Id _salonServicesCollectionGetId(SalonServicesCollection object) {
+Id _salonServiceGetId(SalonService object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _salonServicesCollectionGetLinks(
-    SalonServicesCollection object) {
+List<IsarLinkBase<dynamic>> _salonServiceGetLinks(SalonService object) {
   return [];
 }
 
-void _salonServicesCollectionAttach(
-    IsarCollection<dynamic> col, Id id, SalonServicesCollection object) {
+void _salonServiceAttach(
+    IsarCollection<dynamic> col, Id id, SalonService object) {
   object.id = id;
 }
 
-extension SalonServicesCollectionQueryWhereSort
-    on QueryBuilder<SalonServicesCollection, SalonServicesCollection, QWhere> {
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterWhere>
-      anyId() {
+extension SalonServiceQueryWhereSort
+    on QueryBuilder<SalonService, SalonService, QWhere> {
+  QueryBuilder<SalonService, SalonService, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension SalonServicesCollectionQueryWhere on QueryBuilder<
-    SalonServicesCollection, SalonServicesCollection, QWhereClause> {
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterWhereClause> idEqualTo(Id id) {
+extension SalonServiceQueryWhere
+    on QueryBuilder<SalonService, SalonService, QWhereClause> {
+  QueryBuilder<SalonService, SalonService, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -133,8 +129,8 @@ extension SalonServicesCollectionQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<SalonService, SalonService, QAfterWhereClause> idNotEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -156,8 +152,9 @@ extension SalonServicesCollectionQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<SalonService, SalonService, QAfterWhereClause> idGreaterThan(
+      Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -165,8 +162,8 @@ extension SalonServicesCollectionQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<SalonService, SalonService, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -174,8 +171,7 @@ extension SalonServicesCollectionQueryWhere on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterWhereClause> idBetween(
+  QueryBuilder<SalonService, SalonService, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -192,10 +188,10 @@ extension SalonServicesCollectionQueryWhere on QueryBuilder<
   }
 }
 
-extension SalonServicesCollectionQueryFilter on QueryBuilder<
-    SalonServicesCollection, SalonServicesCollection, QFilterCondition> {
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> idEqualTo(Id value) {
+extension SalonServiceQueryFilter
+    on QueryBuilder<SalonService, SalonService, QFilterCondition> {
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition> idEqualTo(
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -204,8 +200,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -218,8 +213,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> idLessThan(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -232,8 +226,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> idBetween(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -250,8 +243,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> priceIsNull() {
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      priceIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'price',
@@ -259,8 +252,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> priceIsNotNull() {
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      priceIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'price',
@@ -268,8 +261,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> priceEqualTo(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition> priceEqualTo(
     double? value, {
     double epsilon = Query.epsilon,
   }) {
@@ -282,8 +274,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> priceGreaterThan(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      priceGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -298,8 +290,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> priceLessThan(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition> priceLessThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -314,8 +305,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> priceBetween(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition> priceBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -334,8 +324,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameIsNull() {
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'serviceName',
@@ -343,8 +333,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameIsNotNull() {
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'serviceName',
@@ -352,8 +342,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameEqualTo(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -366,8 +356,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameGreaterThan(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -382,8 +372,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameLessThan(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -398,8 +388,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameBetween(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -418,8 +408,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameStartsWith(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -432,8 +422,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameEndsWith(
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -446,8 +436,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-          QAfterFilterCondition>
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
       serviceNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -458,8 +447,7 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-          QAfterFilterCondition>
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
       serviceNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -470,8 +458,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameIsEmpty() {
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'serviceName',
@@ -480,8 +468,8 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection,
-      QAfterFilterCondition> serviceNameIsNotEmpty() {
+  QueryBuilder<SalonService, SalonService, QAfterFilterCondition>
+      serviceNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'serviceName',
@@ -491,36 +479,33 @@ extension SalonServicesCollectionQueryFilter on QueryBuilder<
   }
 }
 
-extension SalonServicesCollectionQueryObject on QueryBuilder<
-    SalonServicesCollection, SalonServicesCollection, QFilterCondition> {}
+extension SalonServiceQueryObject
+    on QueryBuilder<SalonService, SalonService, QFilterCondition> {}
 
-extension SalonServicesCollectionQueryLinks on QueryBuilder<
-    SalonServicesCollection, SalonServicesCollection, QFilterCondition> {}
+extension SalonServiceQueryLinks
+    on QueryBuilder<SalonService, SalonService, QFilterCondition> {}
 
-extension SalonServicesCollectionQuerySortBy
-    on QueryBuilder<SalonServicesCollection, SalonServicesCollection, QSortBy> {
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      sortByPrice() {
+extension SalonServiceQuerySortBy
+    on QueryBuilder<SalonService, SalonService, QSortBy> {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> sortByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.asc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      sortByPriceDesc() {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> sortByPriceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.desc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      sortByServiceName() {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> sortByServiceName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serviceName', Sort.asc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
+  QueryBuilder<SalonService, SalonService, QAfterSortBy>
       sortByServiceNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serviceName', Sort.desc);
@@ -528,44 +513,39 @@ extension SalonServicesCollectionQuerySortBy
   }
 }
 
-extension SalonServicesCollectionQuerySortThenBy on QueryBuilder<
-    SalonServicesCollection, SalonServicesCollection, QSortThenBy> {
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      thenById() {
+extension SalonServiceQuerySortThenBy
+    on QueryBuilder<SalonService, SalonService, QSortThenBy> {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      thenByIdDesc() {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      thenByPrice() {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> thenByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.asc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      thenByPriceDesc() {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> thenByPriceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.desc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
-      thenByServiceName() {
+  QueryBuilder<SalonService, SalonService, QAfterSortBy> thenByServiceName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serviceName', Sort.asc);
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QAfterSortBy>
+  QueryBuilder<SalonService, SalonService, QAfterSortBy>
       thenByServiceNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'serviceName', Sort.desc);
@@ -573,40 +553,37 @@ extension SalonServicesCollectionQuerySortThenBy on QueryBuilder<
   }
 }
 
-extension SalonServicesCollectionQueryWhereDistinct on QueryBuilder<
-    SalonServicesCollection, SalonServicesCollection, QDistinct> {
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QDistinct>
-      distinctByPrice() {
+extension SalonServiceQueryWhereDistinct
+    on QueryBuilder<SalonService, SalonService, QDistinct> {
+  QueryBuilder<SalonService, SalonService, QDistinct> distinctByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'price');
     });
   }
 
-  QueryBuilder<SalonServicesCollection, SalonServicesCollection, QDistinct>
-      distinctByServiceName({bool caseSensitive = true}) {
+  QueryBuilder<SalonService, SalonService, QDistinct> distinctByServiceName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'serviceName', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension SalonServicesCollectionQueryProperty on QueryBuilder<
-    SalonServicesCollection, SalonServicesCollection, QQueryProperty> {
-  QueryBuilder<SalonServicesCollection, int, QQueryOperations> idProperty() {
+extension SalonServiceQueryProperty
+    on QueryBuilder<SalonService, SalonService, QQueryProperty> {
+  QueryBuilder<SalonService, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<SalonServicesCollection, double?, QQueryOperations>
-      priceProperty() {
+  QueryBuilder<SalonService, double?, QQueryOperations> priceProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'price');
     });
   }
 
-  QueryBuilder<SalonServicesCollection, String?, QQueryOperations>
-      serviceNameProperty() {
+  QueryBuilder<SalonService, String?, QQueryOperations> serviceNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'serviceName');
     });

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'schedule_collection.dart';
+part of 'schedule.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,14 +9,13 @@ part of 'schedule_collection.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetScheduleCollectionCollection on Isar {
-  IsarCollection<ScheduleCollection> get scheduleCollections =>
-      this.collection();
+extension GetScheduleCollection on Isar {
+  IsarCollection<Schedule> get schedules => this.collection();
 }
 
-const ScheduleCollectionSchema = CollectionSchema(
-  name: r'ScheduleCollection',
-  id: 6305416856726455358,
+const ScheduleSchema = CollectionSchema(
+  name: r'Schedule',
+  id: 6369058706800408146,
   properties: {
     r'clientName': PropertySchema(
       id: 0,
@@ -54,29 +53,29 @@ const ScheduleCollectionSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _scheduleCollectionEstimateSize,
-  serialize: _scheduleCollectionSerialize,
-  deserialize: _scheduleCollectionDeserialize,
-  deserializeProp: _scheduleCollectionDeserializeProp,
+  estimateSize: _scheduleEstimateSize,
+  serialize: _scheduleSerialize,
+  deserialize: _scheduleDeserialize,
+  deserializeProp: _scheduleDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {
     r'services': LinkSchema(
-      id: -2732792521210690393,
+      id: 4224112064197478404,
       name: r'services',
-      target: r'SalonServicesCollection',
+      target: r'SalonService',
       single: false,
     )
   },
   embeddedSchemas: {},
-  getId: _scheduleCollectionGetId,
-  getLinks: _scheduleCollectionGetLinks,
-  attach: _scheduleCollectionAttach,
+  getId: _scheduleGetId,
+  getLinks: _scheduleGetLinks,
+  attach: _scheduleAttach,
   version: '3.1.0+1',
 );
 
-int _scheduleCollectionEstimateSize(
-  ScheduleCollection object,
+int _scheduleEstimateSize(
+  Schedule object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -96,8 +95,8 @@ int _scheduleCollectionEstimateSize(
   return bytesCount;
 }
 
-void _scheduleCollectionSerialize(
-  ScheduleCollection object,
+void _scheduleSerialize(
+  Schedule object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -111,13 +110,13 @@ void _scheduleCollectionSerialize(
   writer.writeString(offsets[6], object.whatsappNumber);
 }
 
-ScheduleCollection _scheduleCollectionDeserialize(
+Schedule _scheduleDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = ScheduleCollection();
+  final object = Schedule();
   object.clientName = reader.readStringOrNull(offsets[0]);
   object.date = reader.readDateTimeOrNull(offsets[1]);
   object.endHour = reader.readDoubleOrNull(offsets[2]);
@@ -129,7 +128,7 @@ ScheduleCollection _scheduleCollectionDeserialize(
   return object;
 }
 
-P _scheduleCollectionDeserializeProp<P>(
+P _scheduleDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -155,35 +154,30 @@ P _scheduleCollectionDeserializeProp<P>(
   }
 }
 
-Id _scheduleCollectionGetId(ScheduleCollection object) {
+Id _scheduleGetId(Schedule object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _scheduleCollectionGetLinks(
-    ScheduleCollection object) {
+List<IsarLinkBase<dynamic>> _scheduleGetLinks(Schedule object) {
   return [object.services];
 }
 
-void _scheduleCollectionAttach(
-    IsarCollection<dynamic> col, Id id, ScheduleCollection object) {
+void _scheduleAttach(IsarCollection<dynamic> col, Id id, Schedule object) {
   object.id = id;
-  object.services.attach(
-      col, col.isar.collection<SalonServicesCollection>(), r'services', id);
+  object.services
+      .attach(col, col.isar.collection<SalonService>(), r'services', id);
 }
 
-extension ScheduleCollectionQueryWhereSort
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QWhere> {
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterWhere> anyId() {
+extension ScheduleQueryWhereSort on QueryBuilder<Schedule, Schedule, QWhere> {
+  QueryBuilder<Schedule, Schedule, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension ScheduleCollectionQueryWhere
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QWhereClause> {
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterWhereClause>
-      idEqualTo(Id id) {
+extension ScheduleQueryWhere on QueryBuilder<Schedule, Schedule, QWhereClause> {
+  QueryBuilder<Schedule, Schedule, QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -192,8 +186,7 @@ extension ScheduleCollectionQueryWhere
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterWhereClause>
-      idNotEqualTo(Id id) {
+  QueryBuilder<Schedule, Schedule, QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -215,8 +208,8 @@ extension ScheduleCollectionQueryWhere
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterWhereClause>
-      idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<Schedule, Schedule, QAfterWhereClause> idGreaterThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -224,8 +217,8 @@ extension ScheduleCollectionQueryWhere
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterWhereClause>
-      idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<Schedule, Schedule, QAfterWhereClause> idLessThan(Id id,
+      {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -233,8 +226,7 @@ extension ScheduleCollectionQueryWhere
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterWhereClause>
-      idBetween(
+  QueryBuilder<Schedule, Schedule, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -251,10 +243,9 @@ extension ScheduleCollectionQueryWhere
   }
 }
 
-extension ScheduleCollectionQueryFilter
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QFilterCondition> {
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameIsNull() {
+extension ScheduleQueryFilter
+    on QueryBuilder<Schedule, Schedule, QFilterCondition> {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'clientName',
@@ -262,7 +253,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       clientNameIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -271,8 +262,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameEqualTo(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -285,8 +275,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameGreaterThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -301,8 +290,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameLessThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -317,8 +305,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -337,8 +324,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameStartsWith(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -351,8 +337,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameEndsWith(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -365,8 +350,9 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameContains(String value, {bool caseSensitive = true}) {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameContains(
+      String value,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'clientName',
@@ -376,8 +362,9 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'clientName',
@@ -387,8 +374,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      clientNameIsEmpty() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> clientNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'clientName',
@@ -397,7 +383,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       clientNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -407,8 +393,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      dateIsNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> dateIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'date',
@@ -416,8 +401,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      dateIsNotNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> dateIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'date',
@@ -425,8 +409,8 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      dateEqualTo(DateTime? value) {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> dateEqualTo(
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'date',
@@ -435,8 +419,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      dateGreaterThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> dateGreaterThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -449,8 +432,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      dateLessThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> dateLessThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -463,8 +445,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      dateBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> dateBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
@@ -481,8 +462,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      endHourIsNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'endHour',
@@ -490,8 +470,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      endHourIsNotNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'endHour',
@@ -499,8 +478,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      endHourEqualTo(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourEqualTo(
     double? value, {
     double epsilon = Query.epsilon,
   }) {
@@ -513,8 +491,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      endHourGreaterThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -529,8 +506,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      endHourLessThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourLessThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -545,8 +521,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      endHourBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -565,8 +540,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      idEqualTo(Id value) {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -575,8 +549,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      idGreaterThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -589,8 +562,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      idLessThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -603,8 +575,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      idBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -621,7 +592,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       isServiceFinishedIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -630,7 +601,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       isServiceFinishedIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -639,7 +610,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       isServiceFinishedEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -649,8 +620,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      priceIsNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> priceIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'price',
@@ -658,8 +628,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      priceIsNotNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> priceIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'price',
@@ -667,8 +636,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      priceEqualTo(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> priceEqualTo(
     double? value, {
     double epsilon = Query.epsilon,
   }) {
@@ -681,8 +649,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      priceGreaterThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> priceGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -697,8 +664,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      priceLessThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> priceLessThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -713,8 +679,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      priceBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> priceBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -733,8 +698,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      startHourIsNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'startHour',
@@ -742,8 +706,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      startHourIsNotNull() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'startHour',
@@ -751,8 +714,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      startHourEqualTo(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourEqualTo(
     double? value, {
     double epsilon = Query.epsilon,
   }) {
@@ -765,8 +727,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      startHourGreaterThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourGreaterThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -781,8 +742,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      startHourLessThan(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourLessThan(
     double? value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -797,8 +757,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      startHourBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourBetween(
     double? lower,
     double? upper, {
     bool includeLower = true,
@@ -817,7 +776,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
@@ -826,7 +785,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
@@ -835,8 +794,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      whatsappNumberEqualTo(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> whatsappNumberEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -849,7 +807,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberGreaterThan(
     String? value, {
     bool include = false,
@@ -865,7 +823,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberLessThan(
     String? value, {
     bool include = false,
@@ -881,8 +839,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      whatsappNumberBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> whatsappNumberBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -901,7 +858,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberStartsWith(
     String value, {
     bool caseSensitive = true,
@@ -915,7 +872,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberEndsWith(
     String value, {
     bool caseSensitive = true,
@@ -929,7 +886,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -940,8 +897,9 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      whatsappNumberMatches(String pattern, {bool caseSensitive = true}) {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> whatsappNumberMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'whatsappNumber',
@@ -951,7 +909,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -961,7 +919,7 @@ extension ScheduleCollectionQueryFilter
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       whatsappNumberIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
@@ -972,40 +930,38 @@ extension ScheduleCollectionQueryFilter
   }
 }
 
-extension ScheduleCollectionQueryObject
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QFilterCondition> {}
+extension ScheduleQueryObject
+    on QueryBuilder<Schedule, Schedule, QFilterCondition> {}
 
-extension ScheduleCollectionQueryLinks
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QFilterCondition> {
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      services(FilterQuery<SalonServicesCollection> q) {
+extension ScheduleQueryLinks
+    on QueryBuilder<Schedule, Schedule, QFilterCondition> {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> services(
+      FilterQuery<SalonService> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'services');
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      servicesLengthEqualTo(int length) {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> servicesLengthEqualTo(
+      int length) {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'services', length, true, length, true);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      servicesIsEmpty() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> servicesIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'services', 0, true, 0, true);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      servicesIsNotEmpty() {
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> servicesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'services', 0, false, 999999, true);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       servicesLengthLessThan(
     int length, {
     bool include = false,
@@ -1015,7 +971,7 @@ extension ScheduleCollectionQueryLinks
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition>
       servicesLengthGreaterThan(
     int length, {
     bool include = false,
@@ -1025,8 +981,7 @@ extension ScheduleCollectionQueryLinks
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterFilterCondition>
-      servicesLengthBetween(
+  QueryBuilder<Schedule, Schedule, QAfterFilterCondition> servicesLengthBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -1039,268 +994,232 @@ extension ScheduleCollectionQueryLinks
   }
 }
 
-extension ScheduleCollectionQuerySortBy
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QSortBy> {
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByClientName() {
+extension ScheduleQuerySortBy on QueryBuilder<Schedule, Schedule, QSortBy> {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByClientName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'clientName', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByClientNameDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByClientNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'clientName', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByDate() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByDateDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByEndHour() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByEndHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endHour', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByEndHourDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByEndHourDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endHour', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByIsServiceFinished() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByIsServiceFinished() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isServiceFinished', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByIsServiceFinishedDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByIsServiceFinishedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isServiceFinished', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByPrice() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByPriceDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByPriceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByStartHour() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByStartHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startHour', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByStartHourDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByStartHourDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startHour', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByWhatsappNumber() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByWhatsappNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'whatsappNumber', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      sortByWhatsappNumberDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> sortByWhatsappNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'whatsappNumber', Sort.desc);
     });
   }
 }
 
-extension ScheduleCollectionQuerySortThenBy
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QSortThenBy> {
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByClientName() {
+extension ScheduleQuerySortThenBy
+    on QueryBuilder<Schedule, Schedule, QSortThenBy> {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByClientName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'clientName', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByClientNameDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByClientNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'clientName', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByDate() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByDateDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByDateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'date', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByEndHour() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByEndHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endHour', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByEndHourDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByEndHourDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'endHour', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenById() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByIdDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByIsServiceFinished() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByIsServiceFinished() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isServiceFinished', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByIsServiceFinishedDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByIsServiceFinishedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isServiceFinished', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByPrice() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByPriceDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByPriceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'price', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByStartHour() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByStartHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startHour', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByStartHourDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByStartHourDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'startHour', Sort.desc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByWhatsappNumber() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByWhatsappNumber() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'whatsappNumber', Sort.asc);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QAfterSortBy>
-      thenByWhatsappNumberDesc() {
+  QueryBuilder<Schedule, Schedule, QAfterSortBy> thenByWhatsappNumberDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'whatsappNumber', Sort.desc);
     });
   }
 }
 
-extension ScheduleCollectionQueryWhereDistinct
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct> {
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByClientName({bool caseSensitive = true}) {
+extension ScheduleQueryWhereDistinct
+    on QueryBuilder<Schedule, Schedule, QDistinct> {
+  QueryBuilder<Schedule, Schedule, QDistinct> distinctByClientName(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'clientName', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByDate() {
+  QueryBuilder<Schedule, Schedule, QDistinct> distinctByDate() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'date');
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByEndHour() {
+  QueryBuilder<Schedule, Schedule, QDistinct> distinctByEndHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'endHour');
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByIsServiceFinished() {
+  QueryBuilder<Schedule, Schedule, QDistinct> distinctByIsServiceFinished() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isServiceFinished');
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByPrice() {
+  QueryBuilder<Schedule, Schedule, QDistinct> distinctByPrice() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'price');
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByStartHour() {
+  QueryBuilder<Schedule, Schedule, QDistinct> distinctByStartHour() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'startHour');
     });
   }
 
-  QueryBuilder<ScheduleCollection, ScheduleCollection, QDistinct>
-      distinctByWhatsappNumber({bool caseSensitive = true}) {
+  QueryBuilder<Schedule, Schedule, QDistinct> distinctByWhatsappNumber(
+      {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'whatsappNumber',
           caseSensitive: caseSensitive);
@@ -1308,56 +1227,51 @@ extension ScheduleCollectionQueryWhereDistinct
   }
 }
 
-extension ScheduleCollectionQueryProperty
-    on QueryBuilder<ScheduleCollection, ScheduleCollection, QQueryProperty> {
-  QueryBuilder<ScheduleCollection, int, QQueryOperations> idProperty() {
+extension ScheduleQueryProperty
+    on QueryBuilder<Schedule, Schedule, QQueryProperty> {
+  QueryBuilder<Schedule, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<ScheduleCollection, String?, QQueryOperations>
-      clientNameProperty() {
+  QueryBuilder<Schedule, String?, QQueryOperations> clientNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'clientName');
     });
   }
 
-  QueryBuilder<ScheduleCollection, DateTime?, QQueryOperations> dateProperty() {
+  QueryBuilder<Schedule, DateTime?, QQueryOperations> dateProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'date');
     });
   }
 
-  QueryBuilder<ScheduleCollection, double?, QQueryOperations>
-      endHourProperty() {
+  QueryBuilder<Schedule, double?, QQueryOperations> endHourProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'endHour');
     });
   }
 
-  QueryBuilder<ScheduleCollection, bool?, QQueryOperations>
-      isServiceFinishedProperty() {
+  QueryBuilder<Schedule, bool?, QQueryOperations> isServiceFinishedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isServiceFinished');
     });
   }
 
-  QueryBuilder<ScheduleCollection, double?, QQueryOperations> priceProperty() {
+  QueryBuilder<Schedule, double?, QQueryOperations> priceProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'price');
     });
   }
 
-  QueryBuilder<ScheduleCollection, double?, QQueryOperations>
-      startHourProperty() {
+  QueryBuilder<Schedule, double?, QQueryOperations> startHourProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'startHour');
     });
   }
 
-  QueryBuilder<ScheduleCollection, String?, QQueryOperations>
-      whatsappNumberProperty() {
+  QueryBuilder<Schedule, String?, QQueryOperations> whatsappNumberProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'whatsappNumber');
     });

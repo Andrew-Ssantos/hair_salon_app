@@ -32,6 +32,7 @@ class SalonServicesPage extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           TextField(
+                            keyboardType: TextInputType.number,
                             decoration: const InputDecoration(labelText: 'Valor'),
                           ),
                         ],

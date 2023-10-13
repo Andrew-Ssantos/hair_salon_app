@@ -19,36 +19,39 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const HsDrawer(),
-      bottomNavigationBar: RxBuilder(
-        builder: (_) => HsBottomNavigationBar(
-          currentIndex: currentIndex.value,
-          onTap: (i) {
-            currentIndex.value = i;
-            pageController.animateToPage(
-              i,
-              duration: const Duration(milliseconds: 200),
-              curve: Curves.bounceInOut,
-            );
-            setState(() {});
-          },
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView(
-              controller: pageController,
-              children: const [
-                HomePage(),
-                SchedulePage(),
-                DashboardPage(),
-              ],
+    return RxBuilder(
+      builder: (context) {
+        return Scaffold(
+          bottomNavigationBar: RxBuilder(
+            builder: (_) => HsBottomNavigationBar(
+              currentIndex: currentIndex.value,
+              onTap: (i) {
+                currentIndex.value = i;
+                pageController.animateToPage(
+                  i,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.bounceInOut,
+                );
+              },
             ),
           ),
-        ],
-      ),
+          body: Column(
+            children: [
+              Expanded(
+                child: PageView(
+                  onPageChanged: (newIndex) => setState(() => currentIndex.value = newIndex),
+                  controller: pageController,
+                  children: const [
+                    HomePage(),
+                    SchedulePage(),
+                    DashboardPage(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

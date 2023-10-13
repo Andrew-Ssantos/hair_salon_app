@@ -1,32 +1,32 @@
-import 'package:hair_salon_app/core/db/collections/salon_services_collection.dart';
-import 'package:hair_salon_app/core/db/collections/schedule_collection.dart';
+import 'package:hair_salon_app/core/db/collections/salon_service.dart';
+import 'package:hair_salon_app/core/db/collections/schedule.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DatabaseService {
-  Future<Isar> connectDb() async {
+  Future<Isar> connectDB() async {
     final dir = await getApplicationDocumentsDirectory();
     final db = await Isar.open(
-      [ScheduleCollectionSchema, SalonServicesCollectionSchema],
+      [ScheduleSchema, SalonServiceSchema],
       directory: dir.path,
       inspector: true,
     );
     return db;
   }
 
-  Future<void> addSalonServices(SalonServicesCollection service) async {
-    final db = await connectDb();
-    final salonServices = db.collection<SalonServicesCollection>();
+  Future<void> addSalonService(SalonService newService) async {
+    final db = await connectDB();
+    final salonService = db.salonServices;
     await db.writeTxn(() async {
-      await salonServices.put(service);
+      await salonService.put(newService);
     });
   }
 
-  Future<void> deleteSalonServices(SalonServicesCollection service) async {
-    final db = await connectDb();
-    final salonServices = db.collection<SalonServicesCollection>();
+  Future<void> deleteSalonService(SalonService service) async {
+    final db = await connectDB();
+    final salonService = db.salonServices;
     await db.writeTxn(() async {
-      await salonServices.delete(service.id);
+      await salonService.delete(service.id);
     });
   }
 }
