@@ -3,7 +3,7 @@ import 'package:hair_salon_app/core/db/collections/schedule.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
-class DatabaseService {
+class Database {
   Future<Isar> connectDB() async {
     final dir = await getApplicationDocumentsDirectory();
     final db = await Isar.open(
