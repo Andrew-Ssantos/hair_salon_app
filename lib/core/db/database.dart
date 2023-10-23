@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/db/collections/schedule.dart';
 import 'package:isar/isar.dart';
@@ -5,17 +7,20 @@ import 'package:path_provider/path_provider.dart';
 
 class Database {
   Future<Isar> connectDB() async {
-    final dir = await getApplicationDocumentsDirectory();
-    final db = await Isar.open(
-      [ScheduleSchema, SalonServiceSchema],
-      directory: dir.path,
-      inspector: true,
-    );
-    return db;
+    if (Isar.instanceNames.isEmpty) {
+      final dir = await getApplicationDocumentsDirectory();
+      return await Isar.open(
+        [ScheduleSchema, SalonServiceSchema],
+        directory: dir.path,
+        inspector: true,
+      );
+    }
+    return Future.value(Isar.getInstance());
   }
 
   Future<void> addSalonService(SalonService newService) async {
     final db = await connectDB();
+
     final salonService = db.salonServices;
     await db.writeTxn(() async {
       await salonService.put(newService);
@@ -28,5 +33,11 @@ class Database {
     await db.writeTxn(() async {
       await salonService.delete(service.id);
     });
+  }
+
+  Future<List<SalonService>> findAllSalonServices() async {
+    final db = await connectDB();
+    final result = await db.salonServices.where().findAll();
+    return result;
   }
 }

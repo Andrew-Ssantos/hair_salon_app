@@ -1,17 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_salon_services_list/hs_salon_services_list.dart';
+import 'package:hair_salon_app/features/salon_services/controller/salon_service_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
-class SalonServicesPage extends StatelessWidget {
+class SalonServicesPage extends StatefulWidget {
   const SalonServicesPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
-    final serviceNameEC = TextEditingController();
-    final servicePriceEC = TextEditingController();
+  State<SalonServicesPage> createState() => _SalonServicesPageState();
+}
 
+class _SalonServicesPageState extends State<SalonServicesPage> {
+  final SalonServiceController service = SalonServiceController();
+
+  final formKey = GlobalKey<FormState>();
+  final serviceNameEC = TextEditingController();
+  final servicePriceEC = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Serviços'),
@@ -55,7 +65,19 @@ class SalonServicesPage extends StatelessWidget {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             ),
                             onPressed: () {
-                              if (formKey.currentState!.validate()) {}
+                              if (formKey.currentState!.validate()) {
+                                try {
+                                  final salonService = SalonService()
+                                    ..serviceName = serviceNameEC.text
+                                    ..price = double.parse(servicePriceEC.text);
+
+                                  service.addSalonService(salonService);
+                                } on Exception catch (e, s) {
+                                  log('Erro ao incluir serviço', error: e, stackTrace: s);
+                                }
+                                Navigator.of(context).pop();
+                                service.fetchSalonServices();
+                              }
                             },
                             child: const Text('SALVAR'),
                           ),

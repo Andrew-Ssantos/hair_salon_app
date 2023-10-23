@@ -12,6 +12,12 @@ class AppModule extends Module {
   List<Bind> get binds => [];
 
   @override
+  // TODO: implement imports
+  List<Module> get imports => [
+        SalonServicesModule(),
+      ];
+
+  @override
   List<ModularRoute> get routes => [
         ModuleRoute('/', module: SplashModule()),
         ModuleRoute('/main/', module: MainModule()),
