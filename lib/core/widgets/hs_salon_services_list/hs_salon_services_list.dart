@@ -1,8 +1,6 @@
 import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:hair_salon_app/core/db/collections/salon_service.dart';
-import 'package:hair_salon_app/core/db/database.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/features/salon_services/atom/salon_services_atom.dart';
 import 'package:hair_salon_app/features/salon_services/controller/salon_service_controller.dart';
@@ -15,33 +13,20 @@ class HsSalonServicesList extends StatefulWidget {
 }
 
 class _HsSalonServicesListState extends State<HsSalonServicesList> {
-  List<SalonService> salonServices = salonServicesList.value;
   final service = Modular.get<SalonServiceController>();
 
   @override
   void initState() {
     super.initState();
-    final servicesList = service.fetchSalonServices();
-    setState(() {
-      salonServices.clear();
-      // salonServices.addAll(servicesList);
-    });
+    service.fetchSalonServices();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final List<Map<String, dynamic>> services = [
-    //   {'service_name': 'Corte Masculino', 'price': 25},
-    //   {'service_name': 'Corte Feminino', 'price': 35},
-    //   {'service_name': 'Barba', 'price': 15},
-    //   {'service_name': 'Escova', 'price': 40},
-    //   {'service_name': 'Progessiva', 'price': 120},
-    //   {'service_name': 'Sobrancelha', 'price': 20},
-    //   {'service_name': 'Botox', 'price': 100},
-    // ];
-
     return RxBuilder(
       builder: (context) {
+        final salonServices = salonServicesList.value;
+
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.all(15),
@@ -87,8 +72,8 @@ class _HsSalonServicesListState extends State<HsSalonServicesList> {
                                 actions: [
                                   TextButton(
                                     onPressed: () {
-                                      Database().deleteSalonService(salonServices[index]);
-                                      SalonServiceController().fetchSalonServices();
+                                      service.deleteSalonService(salonServices[index]);
+                                      service.fetchSalonServices();
                                       Navigator.of(context).pop();
                                     },
                                     child: const Text(

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/db/collections/schedule.dart';
 import 'package:isar/isar.dart';
@@ -37,7 +35,6 @@ class Database {
 
   Future<List<SalonService>> findAllSalonServices() async {
     final db = await connectDB();
-    final result = await db.salonServices.where().findAll();
-    return result;
+    return await db.salonServices.where().findAll();
   }
 }

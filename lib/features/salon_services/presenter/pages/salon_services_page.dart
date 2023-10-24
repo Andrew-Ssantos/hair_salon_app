@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_salon_services_list/hs_salon_services_list.dart';
@@ -15,7 +17,7 @@ class SalonServicesPage extends StatefulWidget {
 }
 
 class _SalonServicesPageState extends State<SalonServicesPage> {
-  final SalonServiceController service = SalonServiceController();
+  final service = Modular.get<SalonServiceController>();
 
   final formKey = GlobalKey<FormState>();
   final serviceNameEC = TextEditingController();
@@ -72,6 +74,7 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
                                     ..price = double.parse(servicePriceEC.text);
 
                                   service.addSalonService(salonService);
+                                  service.fetchSalonServices();
                                 } on Exception catch (e, s) {
                                   log('Erro ao incluir serviço', error: e, stackTrace: s);
                                 }
@@ -87,6 +90,8 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
                               surfaceTintColor: ColorsConstants.ligthGreen,
                             ),
                             onPressed: () {
+                              serviceNameEC.clear();
+                              servicePriceEC.clear();
                               Navigator.of(context).pop();
                             },
                             child: const Text(
@@ -105,10 +110,14 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
           ),
         ],
       ),
-      body: const Column(
-        children: [
-          HsSalonServicesList(),
-        ],
+      body: RxBuilder(
+        builder: (BuildContext context) {
+          return const Column(
+            children: [
+              HsSalonServicesList(),
+            ],
+          );
+        },
       ),
     );
   }
