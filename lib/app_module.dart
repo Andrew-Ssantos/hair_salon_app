@@ -12,7 +12,6 @@ class AppModule extends Module {
   List<Bind> get binds => [];
 
   @override
-  // TODO: implement imports
   List<Module> get imports => [
         SalonServicesModule(),
       ];

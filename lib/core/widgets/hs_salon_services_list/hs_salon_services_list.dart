@@ -16,21 +16,14 @@ class _HsSalonServicesListState extends State<HsSalonServicesList> {
   final service = Modular.get<SalonServiceController>();
 
   @override
-  void initState() {
-    super.initState();
-    service.fetchSalonServices();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return RxBuilder(
-      builder: (context) {
-        final salonServices = salonServicesList.value;
-
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: ListView.separated(
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: RxBuilder(
+          builder: (context) {
+            final salonServices = salonServicesList.value;
+            return ListView.separated(
               separatorBuilder: (context, index) => const Divider(),
               itemCount: salonServices.length,
               itemBuilder: (context, index) {
@@ -109,10 +102,10 @@ class _HsSalonServicesListState extends State<HsSalonServicesList> {
                   ),
                 );
               },
-            ),
-          ),
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
   }
 }

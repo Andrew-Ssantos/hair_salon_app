@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
@@ -22,6 +21,20 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
   final formKey = GlobalKey<FormState>();
   final serviceNameEC = TextEditingController();
   final servicePriceEC = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    service.fetchSalonServices();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    serviceNameEC.dispose();
+    servicePriceEC.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +79,7 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
                               surfaceTintColor: ColorsConstants.ligthGreen,
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (formKey.currentState!.validate()) {
                                 try {
                                   final salonService = SalonService()
@@ -74,12 +87,11 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
                                     ..price = double.parse(servicePriceEC.text);
 
                                   service.addSalonService(salonService);
-                                  service.fetchSalonServices();
                                 } on Exception catch (e, s) {
                                   log('Erro ao incluir serviço', error: e, stackTrace: s);
                                 }
-                                Navigator.of(context).pop();
-                                service.fetchSalonServices();
+                                await service.fetchSalonServices();
+                                Modular.to.pop();
                               }
                             },
                             child: const Text('SALVAR'),
@@ -110,14 +122,10 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
           ),
         ],
       ),
-      body: RxBuilder(
-        builder: (BuildContext context) {
-          return const Column(
-            children: [
-              HsSalonServicesList(),
-            ],
-          );
-        },
+      body: const Column(
+        children: [
+          HsSalonServicesList(),
+        ],
       ),
     );
   }

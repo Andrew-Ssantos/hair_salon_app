@@ -1,6 +1,5 @@
 import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
-import 'package:hair_salon_app/core/db/database.dart';
 import 'package:hair_salon_app/core/widgets/hs_bottom_navigation_bar/atom/hs_bottom_navigation_bar_atom.dart';
 import 'package:hair_salon_app/core/widgets/hs_bottom_navigation_bar/hs_bottom_navigation_bar.dart';
 import 'package:hair_salon_app/features/dashboard/dashboard_page.dart';
