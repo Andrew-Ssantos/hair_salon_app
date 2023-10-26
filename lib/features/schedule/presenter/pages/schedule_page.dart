@@ -1,7 +1,7 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
-import 'package:hair_salon_app/core/widgets/hs_drawer.dart';
+import 'package:hair_salon_app/core/widgets/hs_drawer/hs_drawer.dart';
 
 class SchedulePage extends StatelessWidget {
   const SchedulePage({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class SchedulePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Agenda')),
-      drawer: const HsDrawer(),
+      drawer: HsDrawer(),
       body: DayView(
         timeLineWidth: 60,
         headerStyle: const HeaderStyle(

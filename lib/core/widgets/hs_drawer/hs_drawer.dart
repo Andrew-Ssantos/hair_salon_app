@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 
+import '../../../features/salon_services/controller/salon_service_controller.dart';
+
 class HsDrawer extends StatelessWidget {
-  const HsDrawer({super.key});
+  HsDrawer({super.key});
+
+  final service = Modular.get<SalonServiceController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,9 @@ class HsDrawer extends StatelessWidget {
                     'Serviços',
                     style: TextStyle(fontSize: 14),
                   ),
-                  onTap: () {
+                  onTap: () async {
+                    await service.fetchSalonServices();
+
                     Modular.to.pushNamed('/salon-service/');
                   },
                 ),

@@ -1,7 +1,7 @@
 import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
-import 'package:hair_salon_app/core/widgets/hs_drawer.dart';
+import 'package:hair_salon_app/core/widgets/hs_drawer/hs_drawer.dart';
 import 'package:hair_salon_app/core/widgets/hs_home_scheduled_client/hs_home_scheduled_client.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
     return RxBuilder(
       builder: (_) => Scaffold(
         appBar: AppBar(title: const Text('Tela inicial')),
-        drawer: const HsDrawer(),
+        drawer: HsDrawer(),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(20),
