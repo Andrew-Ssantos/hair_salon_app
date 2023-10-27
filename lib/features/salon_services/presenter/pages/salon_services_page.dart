@@ -1,10 +1,12 @@
 import 'package:asp/asp.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_add_service_modal/hs_add_service_modal.dart';
 import 'package:hair_salon_app/core/widgets/hs_salon_services_list/hs_salon_services_list.dart';
 import 'package:hair_salon_app/features/salon_services/atom/salon_services_atom.dart';
+import 'package:hair_salon_app/features/salon_services/controller/salon_service_controller.dart';
 import 'package:hair_salon_app/features/salon_services/presenter/states/salon_services_states.dart';
 
 class SalonServicesPage extends StatefulWidget {
@@ -32,13 +34,17 @@ class _SalonServicesPageState extends State<SalonServicesPage> {
         title: const Text('Serviços'),
         actions: [
           Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: IconButton(
-                onPressed: () {
-                  showDialog(context: context, builder: (context) => const HsAddServiceModal());
-                },
-                icon: const Icon(Icons.add),
-              )),
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) => const HsAddServiceModal(isUpdatingService: false),
+                );
+              },
+              icon: const Icon(Icons.add),
+            ),
+          ),
         ],
       ),
       body: Column(

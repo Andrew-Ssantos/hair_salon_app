@@ -6,32 +6,49 @@ import 'package:hair_salon_app/features/salon_services/atom/salon_services_atom.
 import 'package:hair_salon_app/features/salon_services/presenter/states/salon_services_states.dart';
 
 class SalonServiceController {
-  Future<void> fetchSalonServices() async {
+  final db = Database();
+
+  fetchSalonServices() async {
     salonServicesState.setValue(SalonServicesStatesLoading());
     salonServicesList.value.clear();
     try {
-      final db = Database();
       final servicesList = await db.findAllSalonServices();
       salonServicesList.value.addAll(servicesList);
       salonServicesState.setValue(SalonServicesStatesSuccess(salonServicesList.value));
     } catch (e, s) {
-      log('Erro ao carregar serviços', error: e, stackTrace: s);
+      log('Erro ao lista de serviços', error: e, stackTrace: s);
     }
   }
 
-  addSalonService(SalonService newService) {
+  addSalonService(SalonService newService) async {
     try {
-      return Database().addSalonService(newService);
+      return await db.addSalonService(newService);
     } on Exception catch (e, s) {
-      log('Erro ao carregar serviços', error: e, stackTrace: s);
+      log('Erro ao incluir serviço', error: e, stackTrace: s);
     }
   }
 
-  deleteSalonService(SalonService service) {
+  updateSalonService(SalonService service) async {
     try {
-      return Database().deleteSalonService(service);
+      return await db.updateSalonService(service);
+    } on Exception catch (e, s) {
+      log('Erro ao atualizar serviço', error: e, stackTrace: s);
+    }
+  }
+
+  deleteSalonService(SalonService service) async {
+    try {
+      return await db.deleteSalonService(service);
     } on Exception catch (e, s) {
       log('Erro ao deletar serviço', error: e, stackTrace: s);
+    }
+  }
+
+  findSingleSalonService(int id) async {
+    try {
+      return await db.findSingleSalonService(id);
+    } on Exception catch (e, s) {
+      log('Erro ao carregar serviço', error: e, stackTrace: s);
     }
   }
 }

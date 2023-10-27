@@ -25,12 +25,24 @@ class Database {
     });
   }
 
+  Future<void> updateSalonService(SalonService service) async {
+    final db = await connectDB();
+    await db.writeTxn(() async {
+      await db.salonServices.put(service);
+    });
+  }
+
   Future<void> deleteSalonService(SalonService service) async {
     final db = await connectDB();
     final salonService = db.salonServices;
     await db.writeTxn(() async {
       await salonService.delete(service.id);
     });
+  }
+
+  Future<SalonService?> findSingleSalonService(int id) async {
+    final db = await connectDB();
+    return await db.salonServices.get(id);
   }
 
   Future<List<SalonService>> findAllSalonServices() async {

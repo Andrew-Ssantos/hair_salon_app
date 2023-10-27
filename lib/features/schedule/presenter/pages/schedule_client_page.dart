@@ -120,7 +120,7 @@ class ScheduleClientPage extends StatelessWidget {
                                   onPressed: () {
                                     showDialog(
                                       context: context,
-                                      builder: ((context) => const HsAddServiceModal()),
+                                      builder: ((context) => const HsAddServiceModal(isUpdatingService: false)),
                                     );
                                     // HsAddServiceModal(
                                     //   isButtonType: true,

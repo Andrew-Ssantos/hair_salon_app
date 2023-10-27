@@ -4,16 +4,16 @@ sealed class SalonServicesStates {
   SalonServicesStates();
 }
 
-class SalonServicesStatesSuccess implements SalonServicesStates {
+class SalonServicesStatesSuccess extends SalonServicesStates {
   final List<SalonService> data;
   SalonServicesStatesSuccess(this.data);
 }
 
-class SalonServicesStatesFail implements SalonServicesStates {
+class SalonServicesStatesFail extends SalonServicesStates {
   final String errorMessage;
   SalonServicesStatesFail(this.errorMessage);
 }
 
-class SalonServicesStatesLoading implements SalonServicesStates {
+class SalonServicesStatesLoading extends SalonServicesStates {
   SalonServicesStatesLoading();
 }

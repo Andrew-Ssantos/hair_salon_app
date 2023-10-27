@@ -8,7 +8,14 @@ import 'package:hair_salon_app/features/salon_services/controller/salon_service_
 import 'package:validatorless/validatorless.dart';
 
 class HsAddServiceModal extends StatefulWidget {
-  const HsAddServiceModal({super.key});
+  final int? salonServiceId;
+  final bool isUpdatingService;
+
+  const HsAddServiceModal({
+    super.key,
+    required this.isUpdatingService,
+    this.salonServiceId,
+  });
 
   @override
   State<HsAddServiceModal> createState() => _HsAddServiceModalState();
@@ -22,10 +29,17 @@ class _HsAddServiceModalState extends State<HsAddServiceModal> {
   final servicePriceEC = TextEditingController();
 
   @override
-  void dispose() {
-    super.dispose();
-    serviceNameEC.dispose();
-    servicePriceEC.dispose();
+  void initState() {
+    _getServiceData();
+    super.initState();
+  }
+
+  _getServiceData() async {
+    if (widget.isUpdatingService) {
+      final SalonService salonService = await service.findSingleSalonService(widget.salonServiceId!);
+      serviceNameEC.text = salonService.serviceName!;
+      servicePriceEC.text = salonService.price.toString();
+    }
   }
 
   @override
@@ -63,19 +77,40 @@ class _HsAddServiceModalState extends State<HsAddServiceModal> {
             ),
             onPressed: () async {
               if (formKey.currentState!.validate()) {
-                try {
-                  final salonService = SalonService()
-                    ..serviceName = serviceNameEC.text
-                    ..price = double.parse(servicePriceEC.text);
+                switch (widget.isUpdatingService) {
+                  case false:
+                    try {
+                      final salonService = SalonService()
+                        ..serviceName = serviceNameEC.text
+                        ..price = double.parse(servicePriceEC.text.contains(',')
+                            ? servicePriceEC.text.replaceAll(',', '.')
+                            : servicePriceEC.text);
 
-                  service.addSalonService(salonService);
-                } on Exception catch (e, s) {
-                  log('Erro ao incluir serviço', error: e, stackTrace: s);
+                      await service.addSalonService(salonService);
+                    } on Exception catch (e, s) {
+                      log('Erro ao incluir serviço', error: e, stackTrace: s);
+                    }
+                    serviceNameEC.clear();
+                    servicePriceEC.clear();
+                    await service.fetchSalonServices();
+                    Modular.to.pop();
+
+                  case true:
+                    try {
+                      final salonService = SalonService()
+                        ..id = widget.salonServiceId!
+                        ..serviceName = serviceNameEC.text
+                        ..price = double.parse(servicePriceEC.text);
+
+                      await service.updateSalonService(salonService);
+                    } on Exception catch (e, s) {
+                      log('Erro ao atualizar serviço', error: e, stackTrace: s);
+                    }
+                    serviceNameEC.clear();
+                    servicePriceEC.clear();
+                    await service.fetchSalonServices();
+                    Modular.to.pop();
                 }
-                serviceNameEC.clear();
-                servicePriceEC.clear();
-                await service.fetchSalonServices();
-                Modular.to.pop();
               }
             },
             child: const Text('SALVAR'),
