@@ -1,5 +1,6 @@
 import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_drawer/hs_drawer.dart';
 
@@ -24,9 +25,24 @@ class SchedulePage extends StatelessWidget {
           color: ColorsConstants.ligthGrey,
           offset: 10,
         ),
-        heightPerMinute: 1.5,
-        onDateTap: (date) {},
+        heightPerMinute: 2,
+        onDateTap: (date) {
+          print(date);
+          Modular.to.pushNamed('/schedule/schedule-client/', arguments: date);
+        },
         controller: EventController(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        backgroundColor: ColorsConstants.green,
+        onPressed: () {
+          Modular.to.pushNamed('/schedule/schedule-client/');
+        },
+        child: const Icon(
+          Icons.add,
+          color: ColorsConstants.purple,
+          size: 30,
+        ),
       ),
     );
   }

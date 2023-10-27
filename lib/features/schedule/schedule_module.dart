@@ -6,6 +6,6 @@ class ScheduleModule extends Module {
   @override
   List<ModularRoute> routes = [
     ChildRoute('/', child: (context, args) => const SchedulePage()),
-    ChildRoute('/schedule-client/', child: (context, args) => const ScheduleClientPage())
+    ChildRoute('/schedule-client/', child: (context, args) => ScheduleClientPage(date: args.data))
   ];
 }
