@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_add_service_modal/hs_add_service_modal.dart';
-import 'package:hair_salon_app/core/widgets/hs_salon_services_list/hs_salon_services_list.dart';
 import 'package:intl/intl.dart';
 import 'package:validatorless/validatorless.dart';
 
 class ScheduleClientPage extends StatefulWidget {
   final DateTime? date;
-  const ScheduleClientPage({Key? key, this.date}) : super(key: key);
+  const ScheduleClientPage({super.key, this.date});
 
   @override
   State<ScheduleClientPage> createState() => _ScheduleClientPageState();
@@ -32,11 +31,33 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
 
   _getDateSelected() {
     if (widget.date != null) {
-      print(widget.date);
       dateEC.text = DateFormat('dd/MM/yyyy').format(widget.date!);
-      startHourEC.text = '${widget.date!.hour}:${widget.date!.minute}';
-      endHourEC.text = '${widget.date!.hour}:${widget.date!.minute}';
+      double hour = double.parse('${widget.date!.hour}');
+      double minute = double.parse('${widget.date!.minute}');
+      startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+      if (minute == 30) {
+        hour += 1;
+        minute = 00;
+      } else {
+        minute = 30;
+      }
+      endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
     }
+  }
+
+  _showDatePicker(context) {
+    return showDatePicker(
+      context: context,
+      firstDate: DateTime(DateTime.now().year - 10),
+      lastDate: DateTime(DateTime.now().year + 10),
+    );
+  }
+
+  _showTimePicker(context) {
+    return showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
   }
 
   @override
@@ -76,42 +97,74 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                             children: [
                               Expanded(
                                 child: TextFormField(
+                                  readOnly: true,
                                   textAlign: TextAlign.center,
-                                  keyboardType: TextInputType.datetime,
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(horizontal: 6),
-                                    labelText: 'Selecione a data',
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
-                                    labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                                    labelText: 'Selecione a data',
+                                    labelStyle: TextStyle(
+                                      fontSize: 13,
+                                      color: ColorsConstants.grey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+
+                                    // hintText: 'Selecione a data',
+                                    // hintStyle: TextStyle(
+                                    //   fontSize: 13,
+                                    //   color: ColorsConstants.grey,
+                                    //   fontWeight: FontWeight.w400,
+                                    // ),
                                   ),
                                   controller: dateEC,
                                   validator: Validatorless.required('Campo obrigatório'),
+                                  onTap: () async {
+                                    await _showDatePicker(context);
+                                  },
                                 ),
                               ),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: TextFormField(
+                                  readOnly: true,
+                                  textAlign: TextAlign.center,
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(horizontal: 13),
                                     labelText: 'Horário Inicial',
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
-                                    labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                                    labelStyle: TextStyle(
+                                      fontSize: 13,
+                                      color: ColorsConstants.grey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                   controller: startHourEC,
                                   validator: Validatorless.required('Campo obrigatório'),
+                                  onTap: () async {
+                                    await _showTimePicker(context);
+                                  },
                                 ),
                               ),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: TextFormField(
+                                  readOnly: true,
+                                  textAlign: TextAlign.center,
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(horizontal: 18),
                                     labelText: 'Horário Final',
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
-                                    labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                                    labelStyle: TextStyle(
+                                      fontSize: 13,
+                                      color: ColorsConstants.grey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                                   ),
                                   controller: endHourEC,
                                   validator: Validatorless.required('Campo obrigatório'),
+                                  onTap: () async {
+                                    await _showTimePicker(context);
+                                  },
                                 ),
                               ),
                             ],

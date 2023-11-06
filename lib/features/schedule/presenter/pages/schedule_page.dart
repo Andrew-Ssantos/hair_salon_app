@@ -5,7 +5,7 @@ import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_drawer/hs_drawer.dart';
 
 class SchedulePage extends StatelessWidget {
-  const SchedulePage({Key? key}) : super(key: key);
+  const SchedulePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +25,10 @@ class SchedulePage extends StatelessWidget {
           color: ColorsConstants.ligthGrey,
           offset: 10,
         ),
+        minuteSlotSize: MinuteSlotSize.minutes30,
+        startDuration: const Duration(hours: 8),
         heightPerMinute: 2,
         onDateTap: (date) {
-          print(date);
           Modular.to.pushNamed('/schedule/schedule-client/', arguments: date);
         },
         controller: EventController(),

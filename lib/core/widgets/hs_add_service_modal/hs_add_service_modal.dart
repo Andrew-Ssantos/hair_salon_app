@@ -50,26 +50,44 @@ class _HsAddServiceModalState extends State<HsAddServiceModal> {
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         title: const Text('Incluir serviço'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: serviceNameEC,
-              validator: Validatorless.required('Nome do serviço não pode ser vazio'),
-              decoration: const InputDecoration(
-                labelText: 'Serviço',
+        content: Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                controller: serviceNameEC,
+                validator: Validatorless.required('Nome do serviço não pode ser vazio'),
+                decoration: const InputDecoration(
+                  labelText: 'Serviço',
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
-            TextFormField(
-              controller: servicePriceEC,
-              validator: Validatorless.required('Preço do serviço não pode ser vazio'),
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Valor'),
-            ),
-          ],
+              const SizedBox(height: 20),
+              TextFormField(
+                controller: servicePriceEC,
+                validator: Validatorless.required('Preço do serviço não pode ser vazio'),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: 'Valor'),
+              ),
+            ],
+          ),
         ),
+        scrollable: true,
         actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+              surfaceTintColor: ColorsConstants.ligthGreen,
+            ),
+            onPressed: () {
+              serviceNameEC.clear();
+              servicePriceEC.clear();
+              Modular.to.pop();
+            },
+            child: const Text(
+              'CANCELAR',
+              style: TextStyle(color: ColorsConstants.red),
+            ),
+          ),
           TextButton(
             style: TextButton.styleFrom(
               surfaceTintColor: ColorsConstants.ligthGreen,
@@ -114,21 +132,6 @@ class _HsAddServiceModalState extends State<HsAddServiceModal> {
               }
             },
             child: const Text('SALVAR'),
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-              surfaceTintColor: ColorsConstants.ligthGreen,
-            ),
-            onPressed: () {
-              serviceNameEC.clear();
-              servicePriceEC.clear();
-              Modular.to.pop();
-            },
-            child: const Text(
-              'CANCELAR',
-              style: TextStyle(color: ColorsConstants.red),
-            ),
           ),
         ],
       ),

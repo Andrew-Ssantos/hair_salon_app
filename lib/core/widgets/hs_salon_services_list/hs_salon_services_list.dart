@@ -78,6 +78,15 @@ class _HsSalonServicesListState extends State<HsSalonServicesList> {
                                 content: const Text('Confirma a exclusão do serviço?'),
                                 actions: [
                                   TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text(
+                                      'CANCELAR',
+                                      style: TextStyle(color: ColorsConstants.purple),
+                                    ),
+                                  ),
+                                  TextButton(
                                     onPressed: () async {
                                       await service.deleteSalonService(widget.salonServices[index]);
                                       await service.fetchSalonServices();
@@ -86,15 +95,6 @@ class _HsSalonServicesListState extends State<HsSalonServicesList> {
                                     child: const Text(
                                       'CONFIRMAR',
                                       style: TextStyle(color: ColorsConstants.red),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text(
-                                      'CANCELAR',
-                                      style: TextStyle(color: ColorsConstants.purple),
                                     ),
                                   ),
                                 ],

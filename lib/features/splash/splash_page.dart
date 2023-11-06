@@ -12,15 +12,18 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  final db = Database();
+  _databaseConnection() async {
+    final db = Database();
+    await db.connectDB();
+  }
 
   @override
   void initState() {
-    super.initState();
-    db.connectDB();
+    _databaseConnection();
     Future.delayed(const Duration(seconds: 3)).then((_) {
       Modular.to.pushReplacementNamed('/main/');
     });
+    super.initState();
   }
 
   @override
