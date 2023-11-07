@@ -45,19 +45,37 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
     }
   }
 
-  _showDatePicker(context) {
+  _showDatePickerDialog(context) {
     return showDatePicker(
       context: context,
       firstDate: DateTime(DateTime.now().year - 10),
       lastDate: DateTime(DateTime.now().year + 10),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+    ).then(
+      (pickedDate) => dateEC.text = DateFormat('dd/MM/yyyy').format(pickedDate!),
     );
   }
 
-  _showTimePicker(context) {
+  _showTimePickerDialog(context, isInitialHour) {
     return showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-    );
+    ).then((pickedTime) {
+      double hour = double.parse('${pickedTime?.hour}');
+      double minute = double.parse('${pickedTime?.minute}');
+      if (isInitialHour) {
+        startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+        if (minute == 30) {
+          hour += 1;
+          minute = 00;
+        } else {
+          minute = 30;
+        }
+        endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+      } else {
+        endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+      }
+    });
   }
 
   @override
@@ -87,7 +105,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                               // icon: Icon(Icons.person),
                               contentPadding: EdgeInsets.only(left: 10),
                               labelText: 'Cliente',
-                              labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                              labelStyle: TextStyle(fontSize: 15, color: ColorsConstants.grey),
                             ),
                             controller: clientEC,
                             validator: Validatorless.required('Campo obrigatório'),
@@ -98,20 +116,21 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                               Expanded(
                                 child: TextFormField(
                                   readOnly: true,
-                                  textAlign: TextAlign.center,
+                                  textAlign: TextAlign.right,
+                                  textAlignVertical: TextAlignVertical.center,
                                   decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 6),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
-                                    labelText: 'Selecione a data',
+                                    labelText: 'Selec. a data',
                                     labelStyle: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: 14,
                                       color: ColorsConstants.grey,
                                       fontWeight: FontWeight.w400,
                                     ),
 
                                     // hintText: 'Selecione a data',
                                     // hintStyle: TextStyle(
-                                    //   fontSize: 13,
+                                    //   fontSize: 14,
                                     //   color: ColorsConstants.grey,
                                     //   fontWeight: FontWeight.w400,
                                     // ),
@@ -119,7 +138,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   controller: dateEC,
                                   validator: Validatorless.required('Campo obrigatório'),
                                   onTap: () async {
-                                    await _showDatePicker(context);
+                                    await _showDatePickerDialog(context);
                                   },
                                 ),
                               ),
@@ -129,11 +148,11 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   readOnly: true,
                                   textAlign: TextAlign.center,
                                   decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 13),
-                                    labelText: 'Horário Inicial',
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 14),
+                                    labelText: 'Hora Inicial',
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
                                     labelStyle: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: 14,
                                       color: ColorsConstants.grey,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -141,7 +160,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   controller: startHourEC,
                                   validator: Validatorless.required('Campo obrigatório'),
                                   onTap: () async {
-                                    await _showTimePicker(context);
+                                    await _showTimePickerDialog(context, true);
                                   },
                                 ),
                               ),
@@ -152,10 +171,10 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   textAlign: TextAlign.center,
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.symmetric(horizontal: 18),
-                                    labelText: 'Horário Final',
+                                    labelText: 'Hora Final',
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
                                     labelStyle: TextStyle(
-                                      fontSize: 13,
+                                      fontSize: 14,
                                       color: ColorsConstants.grey,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -163,7 +182,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   controller: endHourEC,
                                   validator: Validatorless.required('Campo obrigatório'),
                                   onTap: () async {
-                                    await _showTimePicker(context);
+                                    await _showTimePickerDialog(context, false);
                                   },
                                 ),
                               ),

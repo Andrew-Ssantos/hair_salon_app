@@ -44,5 +44,16 @@ sealed class HsAppTheme {
         borderSide: const BorderSide(color: ColorsConstants.red),
       ),
     ),
+    timePickerTheme: TimePickerThemeData(
+      backgroundColor: Colors.white,
+      // dialBackgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      cancelButtonStyle: TextButton.styleFrom(foregroundColor: ColorsConstants.red),
+    ),
+    datePickerTheme: DatePickerThemeData(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      cancelButtonStyle: TextButton.styleFrom(foregroundColor: ColorsConstants.red),
+    ),
   );
 }
