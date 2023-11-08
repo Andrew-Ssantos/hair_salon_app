@@ -29,19 +29,38 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
     super.initState();
   }
 
+  _setHour(DateTime time) {
+    double hour = double.parse('${time.hour}');
+    double minute = double.parse('${time.minute}');
+
+    startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+    if (minute == 30) {
+      hour += 1;
+      minute = 00;
+    } else {
+      minute = 30;
+    }
+    endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+  }
+
+  _checkEndHourLessThanInitialHour(String time) {
+    // final now = DateTime.now();
+    //   final time = DateTime(
+    //     now.year,
+    //     now.month,
+    //     now.day,
+    // 		.
+    // 		.
+    //   );
+    // final hour = DateTime.parse(time);
+
+    // final initialHour = TimeOfDay.
+  }
+
   _getDateSelected() {
     if (widget.date != null) {
       dateEC.text = DateFormat('dd/MM/yyyy').format(widget.date!);
-      double hour = double.parse('${widget.date!.hour}');
-      double minute = double.parse('${widget.date!.minute}');
-      startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
-      if (minute == 30) {
-        hour += 1;
-        minute = 00;
-      } else {
-        minute = 30;
-      }
-      endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+      _setHour(widget.date!);
     }
   }
 
@@ -61,17 +80,25 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
       context: context,
       initialTime: TimeOfDay.now(),
     ).then((pickedTime) {
-      double hour = double.parse('${pickedTime?.hour}');
-      double minute = double.parse('${pickedTime?.minute}');
+      final now = DateTime.now();
+      final time = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        pickedTime!.hour,
+        pickedTime.minute,
+      );
+      double hour = double.parse('${pickedTime.hour}');
+      double minute = double.parse('${pickedTime.minute}');
+
       if (isInitialHour) {
-        startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
-        if (minute == 30) {
-          hour += 1;
-          minute = 00;
+        if (endHourEC.text == '' || endHourEC.text.isEmpty) {
+          _setHour(time);
         } else {
-          minute = 30;
+          double hour = double.parse('${time.hour}');
+          double minute = double.parse('${time.minute}');
+          startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
         }
-        endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
       } else {
         endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
       }
@@ -119,7 +146,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   textAlign: TextAlign.right,
                                   textAlignVertical: TextAlignVertical.center,
                                   decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 7),
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
                                     labelText: 'Selec. a data',
                                     labelStyle: TextStyle(

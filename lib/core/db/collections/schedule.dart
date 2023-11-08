@@ -8,8 +8,8 @@ class Schedule {
   Id id = Isar.autoIncrement;
   String? clientName;
   DateTime? date;
-  double? startHour;
-  double? endHour;
+  DateTime? startHour;
+  DateTime? endHour;
   String? whatsappNumber;
   final services = IsarLinks<SalonService>();
   double? price;

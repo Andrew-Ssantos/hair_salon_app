@@ -30,7 +30,7 @@ const ScheduleSchema = CollectionSchema(
     r'endHour': PropertySchema(
       id: 2,
       name: r'endHour',
-      type: IsarType.double,
+      type: IsarType.dateTime,
     ),
     r'isServiceFinished': PropertySchema(
       id: 3,
@@ -45,7 +45,7 @@ const ScheduleSchema = CollectionSchema(
     r'startHour': PropertySchema(
       id: 5,
       name: r'startHour',
-      type: IsarType.double,
+      type: IsarType.dateTime,
     ),
     r'whatsappNumber': PropertySchema(
       id: 6,
@@ -103,10 +103,10 @@ void _scheduleSerialize(
 ) {
   writer.writeString(offsets[0], object.clientName);
   writer.writeDateTime(offsets[1], object.date);
-  writer.writeDouble(offsets[2], object.endHour);
+  writer.writeDateTime(offsets[2], object.endHour);
   writer.writeBool(offsets[3], object.isServiceFinished);
   writer.writeDouble(offsets[4], object.price);
-  writer.writeDouble(offsets[5], object.startHour);
+  writer.writeDateTime(offsets[5], object.startHour);
   writer.writeString(offsets[6], object.whatsappNumber);
 }
 
@@ -119,11 +119,11 @@ Schedule _scheduleDeserialize(
   final object = Schedule();
   object.clientName = reader.readStringOrNull(offsets[0]);
   object.date = reader.readDateTimeOrNull(offsets[1]);
-  object.endHour = reader.readDoubleOrNull(offsets[2]);
+  object.endHour = reader.readDateTimeOrNull(offsets[2]);
   object.id = id;
   object.isServiceFinished = reader.readBoolOrNull(offsets[3]);
   object.price = reader.readDoubleOrNull(offsets[4]);
-  object.startHour = reader.readDoubleOrNull(offsets[5]);
+  object.startHour = reader.readDateTimeOrNull(offsets[5]);
   object.whatsappNumber = reader.readStringOrNull(offsets[6]);
   return object;
 }
@@ -140,13 +140,13 @@ P _scheduleDeserializeProp<P>(
     case 1:
       return (reader.readDateTimeOrNull(offset)) as P;
     case 2:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 3:
       return (reader.readBoolOrNull(offset)) as P;
     case 4:
       return (reader.readDoubleOrNull(offset)) as P;
     case 5:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 6:
       return (reader.readStringOrNull(offset)) as P;
     default:
@@ -479,54 +479,46 @@ extension ScheduleQueryFilter
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourEqualTo(
-    double? value, {
-    double epsilon = Query.epsilon,
-  }) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'endHour',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourGreaterThan(
-    double? value, {
+    DateTime? value, {
     bool include = false,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'endHour',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourLessThan(
-    double? value, {
+    DateTime? value, {
     bool include = false,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'endHour',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> endHourBetween(
-    double? lower,
-    double? upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -535,7 +527,6 @@ extension ScheduleQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        epsilon: epsilon,
       ));
     });
   }
@@ -715,54 +706,46 @@ extension ScheduleQueryFilter
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourEqualTo(
-    double? value, {
-    double epsilon = Query.epsilon,
-  }) {
+      DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'startHour',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourGreaterThan(
-    double? value, {
+    DateTime? value, {
     bool include = false,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
         property: r'startHour',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourLessThan(
-    double? value, {
+    DateTime? value, {
     bool include = false,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
         property: r'startHour',
         value: value,
-        epsilon: epsilon,
       ));
     });
   }
 
   QueryBuilder<Schedule, Schedule, QAfterFilterCondition> startHourBetween(
-    double? lower,
-    double? upper, {
+    DateTime? lower,
+    DateTime? upper, {
     bool includeLower = true,
     bool includeUpper = true,
-    double epsilon = Query.epsilon,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
@@ -771,7 +754,6 @@ extension ScheduleQueryFilter
         includeLower: includeLower,
         upper: upper,
         includeUpper: includeUpper,
-        epsilon: epsilon,
       ));
     });
   }
@@ -1247,7 +1229,7 @@ extension ScheduleQueryProperty
     });
   }
 
-  QueryBuilder<Schedule, double?, QQueryOperations> endHourProperty() {
+  QueryBuilder<Schedule, DateTime?, QQueryOperations> endHourProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'endHour');
     });
@@ -1265,7 +1247,7 @@ extension ScheduleQueryProperty
     });
   }
 
-  QueryBuilder<Schedule, double?, QQueryOperations> startHourProperty() {
+  QueryBuilder<Schedule, DateTime?, QQueryOperations> startHourProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'startHour');
     });
