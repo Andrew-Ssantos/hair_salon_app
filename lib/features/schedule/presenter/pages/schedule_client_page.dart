@@ -5,6 +5,10 @@ import 'package:hair_salon_app/core/widgets/hs_add_service_modal/hs_add_service_
 import 'package:intl/intl.dart';
 import 'package:validatorless/validatorless.dart';
 
+enum Time { initial, end }
+
+enum Hour { full, half }
+
 class ScheduleClientPage extends StatefulWidget {
   final DateTime? date;
   const ScheduleClientPage({super.key, this.date});
@@ -29,32 +33,122 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
     super.initState();
   }
 
-  _setHour(DateTime time) {
-    double hour = double.parse('${time.hour}');
-    double minute = double.parse('${time.minute}');
+  _convertTimeToString(int hour, int minute) {
+    return '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+  }
 
-    startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+  _setHour(DateTime time) {
+    int hour = int.parse('${time.hour}');
+    int minute = int.parse('${time.minute}');
+
+    startHourEC.text = _convertTimeToString(hour, minute);
     if (minute == 30) {
       hour += 1;
       minute = 00;
     } else {
       minute = 30;
     }
-    endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+    endHourEC.text = _convertTimeToString(hour, minute);
   }
 
-  _checkEndHourLessThanInitialHour(String time) {
-    // final now = DateTime.now();
-    //   final time = DateTime(
-    //     now.year,
-    //     now.month,
-    //     now.day,
-    // 		.
-    // 		.
-    //   );
-    // final hour = DateTime.parse(time);
+  _checkTimeLessOrMore(String initialTime, String endTime, Time timeType) {
+    final List<String> convertInitialHour = initialTime.split(':');
+    final List<String> convertEndHour = endTime.split(':');
 
-    // final initialHour = TimeOfDay.
+    final initialHour = int.parse(convertInitialHour[0]);
+    final initialMinute = int.parse(convertInitialHour[1]);
+    final endHour = int.parse(convertEndHour[0]);
+    final endMinute = int.parse(convertEndHour[1]);
+
+    print(convertInitialHour);
+    print(convertEndHour);
+
+    final hourType = initialMinute > endMinute ? Hour.half : Hour.full;
+
+    switch (timeType) {
+      case Time.initial:
+        if (initialHour > endHour || initialHour == endHour && hourType == Hour.half) {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      startHourEC.text = _convertTimeToString(initialHour, initialMinute);
+                      Modular.to.pop();
+                    },
+                    child: const Text('Fechar'),
+                  ),
+                ],
+                title: const Text('Horário Inválido'),
+                content: const Text('Horário Inicial maior do que a Horário Final'),
+              );
+            },
+          );
+        } else if (startHourEC.text == endHourEC.text) {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Modular.to.pop();
+                    },
+                    child: const Text('Fechar'),
+                  ),
+                ],
+                title: const Text('Horário Inválido'),
+                content: const Text('Horário inicial e final não podem ser iguais'),
+              );
+            },
+          );
+        } else {
+          return _convertTimeToString(initialHour, initialMinute);
+        }
+
+      case Time.end:
+        if (endHour < initialHour && endHourEC.text.isNotEmpty) {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Modular.to.pop();
+                    },
+                    child: const Text('Fechar'),
+                  ),
+                ],
+                title: const Text('Horário Inválido'),
+                content: const Text('Horário Inicial maior do que a Horário Final'),
+              );
+            },
+          );
+        } else if (endHourEC.text == startHourEC.text) {
+          return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Modular.to.pop();
+                    },
+                    child: const Text('Fechar'),
+                  ),
+                ],
+                title: const Text('Horário Inválido'),
+                content: const Text('Horário inicial e final não podem ser iguais'),
+              );
+            },
+          );
+        } else {
+          return _convertTimeToString(endHour, endMinute);
+        }
+    }
   }
 
   _getDateSelected() {
@@ -88,19 +182,19 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
         pickedTime!.hour,
         pickedTime.minute,
       );
-      double hour = double.parse('${pickedTime.hour}');
-      double minute = double.parse('${pickedTime.minute}');
+      int hour = int.parse('${pickedTime.hour}');
+      int minute = int.parse('${pickedTime.minute}');
 
       if (isInitialHour) {
         if (endHourEC.text == '' || endHourEC.text.isEmpty) {
           _setHour(time);
         } else {
-          double hour = double.parse('${time.hour}');
-          double minute = double.parse('${time.minute}');
-          startHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+          final String initialTime = _convertTimeToString(hour, minute);
+          startHourEC.text = _checkTimeLessOrMore(initialTime, endHourEC.text, Time.initial);
         }
       } else {
-        endHourEC.text = '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
+        final String endTime = _convertTimeToString(hour, minute);
+        endHourEC.text = _checkTimeLessOrMore(startHourEC.text, endTime, Time.end);
       }
     });
   }
