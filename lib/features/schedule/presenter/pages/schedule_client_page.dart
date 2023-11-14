@@ -37,6 +37,31 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
     return '${hour.toStringAsFixed(0).padLeft(2, '0')}:${minute.toStringAsFixed(0).padLeft(2, '0')}';
   }
 
+  _showTimeAlertMessage(String message) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          backgroundColor: Colors.white,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Modular.to.pop();
+              },
+              child: const Text(
+                'Fechar',
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+          title: const Text('Horário Inválido'),
+          content: Text(message),
+        );
+      },
+    );
+  }
+
   _setHour(DateTime time) {
     int hour = int.parse('${time.hour}');
     int minute = int.parse('${time.minute}');
@@ -49,6 +74,13 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
       minute = 30;
     }
     endHourEC.text = _convertTimeToString(hour, minute);
+  }
+
+  _getDateSelected() {
+    if (widget.date != null) {
+      dateEC.text = DateFormat('dd/MM/yyyy').format(widget.date!);
+      _setHour(widget.date!);
+    }
   }
 
   _checkTimeLessOrMore(String initialTime, String endTime, Time timeType) {
@@ -68,93 +100,21 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
     switch (timeType) {
       case Time.initial:
         if (initialHour > endHour || initialHour == endHour && hourType == Hour.half) {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      startHourEC.text = _convertTimeToString(initialHour, initialMinute);
-                      Modular.to.pop();
-                    },
-                    child: const Text('Fechar'),
-                  ),
-                ],
-                title: const Text('Horário Inválido'),
-                content: const Text('Horário Inicial maior do que a Horário Final'),
-              );
-            },
-          );
-        } else if (startHourEC.text == endHourEC.text) {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Modular.to.pop();
-                    },
-                    child: const Text('Fechar'),
-                  ),
-                ],
-                title: const Text('Horário Inválido'),
-                content: const Text('Horário inicial e final não podem ser iguais'),
-              );
-            },
-          );
+          return _showTimeAlertMessage('Horário Inicial não pode ser maior do que o Horário Final.');
+        } else if (initialTime == endTime) {
+          return _showTimeAlertMessage('Horário inicial e final não podem ser iguais.');
         } else {
           return _convertTimeToString(initialHour, initialMinute);
         }
 
       case Time.end:
-        if (endHour < initialHour && endHourEC.text.isNotEmpty) {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Modular.to.pop();
-                    },
-                    child: const Text('Fechar'),
-                  ),
-                ],
-                title: const Text('Horário Inválido'),
-                content: const Text('Horário Inicial maior do que a Horário Final'),
-              );
-            },
-          );
-        } else if (endHourEC.text == startHourEC.text) {
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Modular.to.pop();
-                    },
-                    child: const Text('Fechar'),
-                  ),
-                ],
-                title: const Text('Horário Inválido'),
-                content: const Text('Horário inicial e final não podem ser iguais'),
-              );
-            },
-          );
+        if (endHour < initialHour && endHourEC.text.isNotEmpty || endHour == initialHour && hourType == Hour.half) {
+          return _showTimeAlertMessage('Horário Final não pode ser menor do que o Horário Inicial.');
+        } else if (initialTime == endTime) {
+          return _showTimeAlertMessage('Horário inicial e final não podem ser iguais.');
         } else {
           return _convertTimeToString(endHour, endMinute);
         }
-    }
-  }
-
-  _getDateSelected() {
-    if (widget.date != null) {
-      dateEC.text = DateFormat('dd/MM/yyyy').format(widget.date!);
-      _setHour(widget.date!);
     }
   }
 
@@ -170,33 +130,34 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
   }
 
   _showTimePickerDialog(context, isInitialHour) {
-    return showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    ).then((pickedTime) {
-      final now = DateTime.now();
-      final time = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        pickedTime!.hour,
-        pickedTime.minute,
-      );
-      int hour = int.parse('${pickedTime.hour}');
-      int minute = int.parse('${pickedTime.minute}');
+    !isInitialHour && startHourEC.text.isEmpty
+        ? _showTimeAlertMessage('Hora Inicial não pode estar vazia.\nPreencha Hora Inicial primeiro.')
+        : showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          ).then((pickedTime) {
+            final now = DateTime.now();
+            final time = DateTime(
+              now.year,
+              now.month,
+              now.day,
+              pickedTime!.hour,
+              pickedTime.minute,
+            );
 
-      if (isInitialHour) {
-        if (endHourEC.text == '' || endHourEC.text.isEmpty) {
-          _setHour(time);
-        } else {
-          final String initialTime = _convertTimeToString(hour, minute);
-          startHourEC.text = _checkTimeLessOrMore(initialTime, endHourEC.text, Time.initial);
-        }
-      } else {
-        final String endTime = _convertTimeToString(hour, minute);
-        endHourEC.text = _checkTimeLessOrMore(startHourEC.text, endTime, Time.end);
-      }
-    });
+            switch (isInitialHour) {
+              case true:
+                if (endHourEC.text == '' || endHourEC.text.isEmpty) {
+                  _setHour(time);
+                } else {
+                  final String initialTime = _convertTimeToString(time.hour, time.minute);
+                  startHourEC.text = _checkTimeLessOrMore(initialTime, endHourEC.text, Time.initial);
+                }
+              case false:
+                final String endTime = _convertTimeToString(time.hour, time.minute);
+                endHourEC.text = _checkTimeLessOrMore(startHourEC.text, endTime, Time.end);
+            }
+          });
   }
 
   @override
@@ -237,10 +198,10 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                               Expanded(
                                 child: TextFormField(
                                   readOnly: true,
-                                  textAlign: TextAlign.right,
+                                  textAlign: TextAlign.center,
                                   textAlignVertical: TextAlignVertical.center,
                                   decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 7),
+                                    contentPadding: EdgeInsets.only(left: 10),
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
                                     labelText: 'Selec. a data',
                                     labelStyle: TextStyle(
@@ -248,13 +209,6 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                       color: ColorsConstants.grey,
                                       fontWeight: FontWeight.w400,
                                     ),
-
-                                    // hintText: 'Selecione a data',
-                                    // hintStyle: TextStyle(
-                                    //   fontSize: 14,
-                                    //   color: ColorsConstants.grey,
-                                    //   fontWeight: FontWeight.w400,
-                                    // ),
                                   ),
                                   controller: dateEC,
                                   validator: Validatorless.required('Campo obrigatório'),
@@ -269,7 +223,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   readOnly: true,
                                   textAlign: TextAlign.center,
                                   decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 14),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
                                     labelText: 'Hora Inicial',
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
                                     labelStyle: TextStyle(
@@ -291,7 +245,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   readOnly: true,
                                   textAlign: TextAlign.center,
                                   decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.symmetric(horizontal: 18),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
                                     labelText: 'Hora Final',
                                     floatingLabelAlignment: FloatingLabelAlignment.center,
                                     labelStyle: TextStyle(
@@ -316,6 +270,9 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                               contentPadding: EdgeInsets.only(left: 10),
                               labelText: 'Whatsapp',
                               labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                              hintText: '(Apenas números)',
+                              hintStyle: TextStyle(
+                                  fontSize: 14, color: ColorsConstants.ligthGrey, fontWeight: FontWeight.normal),
                             ),
                             controller: whatsappEC,
                             validator: Validatorless.required('Campo obrigatório'),
@@ -370,16 +327,6 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                             ),
                             child: Text('Teste'),
                           ),
-
-                          // TextFormField(
-                          //   decoration: const InputDecoration(
-                          //     contentPadding: EdgeInsets.only(left: 10),
-                          //     labelText: 'Valor',
-                          //     labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
-                          //   ),
-                          //   controller: valueEC,
-                          //   validator: Validatorless.required('Campo obrigatório'),
-                          // ),
                         ],
                       ),
                     ),
