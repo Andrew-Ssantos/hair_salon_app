@@ -124,6 +124,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
       firstDate: DateTime(DateTime.now().year - 10),
       lastDate: DateTime(DateTime.now().year + 10),
       initialEntryMode: DatePickerEntryMode.calendarOnly,
+      initialDate: DateTime.now(),
     ).then(
       (pickedDate) => dateEC.text = DateFormat('dd/MM/yyyy').format(pickedDate!),
     );
@@ -135,29 +136,31 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
         : showTimePicker(
             context: context,
             initialTime: TimeOfDay.now(),
-          ).then((pickedTime) {
-            final now = DateTime.now();
-            final time = DateTime(
-              now.year,
-              now.month,
-              now.day,
-              pickedTime!.hour,
-              pickedTime.minute,
-            );
+          ).then(
+            (pickedTime) {
+              final now = DateTime.now();
+              final time = DateTime(
+                now.year,
+                now.month,
+                now.day,
+                pickedTime!.hour,
+                pickedTime.minute,
+              );
 
-            switch (isInitialHour) {
-              case true:
-                if (endHourEC.text == '' || endHourEC.text.isEmpty) {
-                  _setHour(time);
-                } else {
-                  final String initialTime = _convertTimeToString(time.hour, time.minute);
-                  startHourEC.text = _checkTimeLessOrMore(initialTime, endHourEC.text, Time.initial);
-                }
-              case false:
-                final String endTime = _convertTimeToString(time.hour, time.minute);
-                endHourEC.text = _checkTimeLessOrMore(startHourEC.text, endTime, Time.end);
-            }
-          });
+              switch (isInitialHour) {
+                case true:
+                  if (endHourEC.text == '' || endHourEC.text.isEmpty) {
+                    _setHour(time);
+                  } else {
+                    final String initialTime = _convertTimeToString(time.hour, time.minute);
+                    startHourEC.text = _checkTimeLessOrMore(initialTime, endHourEC.text, Time.initial);
+                  }
+                case false:
+                  final String endTime = _convertTimeToString(time.hour, time.minute);
+                  endHourEC.text = _checkTimeLessOrMore(startHourEC.text, endTime, Time.end);
+              }
+            },
+          );
   }
 
   @override

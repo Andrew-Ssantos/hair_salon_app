@@ -53,7 +53,6 @@ sealed class HsAppTheme {
     datePickerTheme: DatePickerThemeData(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      cancelButtonStyle: TextButton.styleFrom(foregroundColor: ColorsConstants.red),
     ),
   );
 }

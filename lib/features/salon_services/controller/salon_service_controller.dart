@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/db/database.dart';
 import 'package:hair_salon_app/features/salon_services/atom/salon_services_atom.dart';
@@ -15,7 +14,7 @@ class SalonServiceController {
       final servicesList = await db.findAllSalonServices();
       salonServicesList.value.addAll(servicesList);
       salonServicesState.setValue(SalonServicesStatesSuccess(salonServicesList.value));
-    } catch (e, s) {
+    } on Exception catch (e, s) {
       log('Erro ao lista de serviços', error: e, stackTrace: s);
     }
   }
