@@ -9,9 +9,9 @@ import 'package:hair_salon_app/features/salon_services/controller/salon_service_
 class HsSalonServicesList extends StatefulWidget {
   final List<SalonService> salonServices;
   const HsSalonServicesList({
-    Key? key,
+    super.key,
     required this.salonServices,
-  }) : super(key: key);
+  });
 
   @override
   State<HsSalonServicesList> createState() => _HsSalonServicesListState();
