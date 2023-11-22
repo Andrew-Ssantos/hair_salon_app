@@ -38,7 +38,6 @@ class HsDrawer extends StatelessWidget {
                   ),
                   onTap: () async {
                     await service.fetchSalonServices();
-
                     Modular.to.pushNamed('/salon-service/');
                   },
                 ),

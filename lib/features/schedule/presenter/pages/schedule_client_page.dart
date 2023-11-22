@@ -34,13 +34,11 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
   final valueEC = TextEditingController();
 
   final salonServiceController = Modular.get<SalonServiceController>();
-  late List<SalonService> salonServices;
+  List<SalonService> salonServices = salonServicesList.value;
 
   @override
   void initState() {
     _getDateSelected();
-    salonServiceController.fetchSalonServices();
-    salonServices = salonServicesList.value;
     super.initState();
   }
 
@@ -102,9 +100,6 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
     final initialMinute = int.parse(convertInitialHour[1]);
     final endHour = int.parse(convertEndHour[0]);
     final endMinute = int.parse(convertEndHour[1]);
-
-    print(convertInitialHour);
-    print(convertEndHour);
 
     final hourType = initialMinute > endMinute ? Hour.half : Hour.full;
 
@@ -291,28 +286,45 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          RxBuilder(
-                            builder: (_) {
-                              return Expanded(
-                                child: DropdownButtonFormField<SalonService>(
+                          Expanded(
+                            child: RxBuilder(
+                              builder: (context) {
+                                return DropdownButtonFormField<SalonService>(
                                   decoration: const InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
-                                    labelText: 'Serviço',
-                                    labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                                    // labelText: 'Serviço',
+                                    // labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
                                   ),
                                   hint: const Text('Serviços'),
                                   borderRadius: BorderRadius.circular(5),
                                   // controller: serviceEC,
-                                  items: [
-                                    DropdownMenuItem<SalonService>(child: Text('')),
-                                  ],
                                   onChanged: (service) {
                                     scheduleClientServiceList.value.add(service!);
                                   },
+                                  items: salonServices
+                                      ?.map(
+                                        (service) => DropdownMenuItem<SalonService>(
+                                          value: service,
+                                          child: ListTile(
+                                            title: Text(
+                                              service.serviceName!,
+                                              style: const TextStyle(fontSize: 16),
+                                            ),
+                                            trailing: Text(
+                                              service.price!.toStringAsFixed(2),
+                                              style: const TextStyle(
+                                                  color: ColorsConstants.grey,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
                                   validator: Validatorless.required('Campo obrigatório'),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
@@ -346,7 +358,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                               border: Border.all(color: ColorsConstants.ligthPurple, width: 1),
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            child: const HsScheduleClientServices(),
+                            child: const Expanded(child: HsScheduleClientServices()),
                           ),
                         ),
                       ),

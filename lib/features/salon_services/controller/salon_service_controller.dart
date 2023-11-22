@@ -15,7 +15,8 @@ class SalonServiceController {
       salonServicesList.value.addAll(servicesList);
       salonServicesState.setValue(SalonServicesStatesSuccess(salonServicesList.value));
     } on Exception catch (e, s) {
-      log('Erro ao lista de serviços', error: e, stackTrace: s);
+      log('Erro ao carregar lista de serviços', error: e, stackTrace: s);
+      salonServicesState.setValue(SalonServicesStatesFail('Erro ao carregar lista de serviços'));
     }
   }
 
