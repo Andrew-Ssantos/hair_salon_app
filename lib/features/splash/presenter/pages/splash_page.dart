@@ -55,19 +55,11 @@ class _SplashPageState extends State<SplashPage> {
   loadScreen() {
     return Scaffold(
       backgroundColor: ColorsConstants.purple,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        // mainAxisSize: MainAxisSize.min,
-        children: [
-          Lottie.asset(
-            'lib/core/assets/animation/splash_page_icon.json',
-            fit: BoxFit.fitWidth,
-          ),
-          const Text(
-            'CARREGANDO DADOS...',
-            style: TextStyle(fontSize: 14, color: Colors.white),
-          ),
-        ],
+      body: Center(
+        child: Lottie.asset(
+          'lib/core/assets/animation/splash_page_icon.json',
+          fit: BoxFit.fitWidth,
+        ),
       ),
     );
   }
@@ -78,7 +70,7 @@ class _SplashPageState extends State<SplashPage> {
       backgroundColor: ColorsConstants.purple,
       body: Center(
         child: Text(
-          'CARREGAMENTO CONCLUÍDO!',
+          'Carregamento Concluído!',
           style: TextStyle(fontSize: 16, color: Colors.white),
         ),
       ),

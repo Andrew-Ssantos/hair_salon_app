@@ -20,9 +20,11 @@ class _HsScheduleClientServicesState extends State<HsScheduleClientServices> {
               separatorBuilder: (context, index) => const Divider(),
               itemCount: scheduleClientServiceList.value.length,
               itemBuilder: (context, index) {
+                print(scheduleClientServiceList.value[index].serviceName!);
+                print('${scheduleClientServiceList.value[index].price}');
                 return ListTile(
                   title: Text(scheduleClientServiceList.value[index].serviceName!),
-                  subtitle: Text('${scheduleClientServiceList.value[index].price!}'),
+                  subtitle: Text(scheduleClientServiceList.value[index].price!.toStringAsFixed(2)),
                   trailing: Row(
                     children: [
                       InkWell(

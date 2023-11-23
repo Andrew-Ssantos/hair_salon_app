@@ -287,43 +287,47 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                       Row(
                         children: [
                           Expanded(
-                            child: RxBuilder(
-                              builder: (context) {
-                                return DropdownButtonFormField<SalonService>(
-                                  decoration: const InputDecoration(
-                                    contentPadding: EdgeInsets.only(left: 10),
-                                    // labelText: 'Serviço',
-                                    // labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
-                                  ),
-                                  hint: const Text('Serviços'),
-                                  borderRadius: BorderRadius.circular(5),
-                                  // controller: serviceEC,
-                                  onChanged: (service) {
-                                    scheduleClientServiceList.value.add(service!);
-                                  },
-                                  items: salonServices
-                                      ?.map(
-                                        (service) => DropdownMenuItem<SalonService>(
-                                          value: service,
-                                          child: ListTile(
-                                            title: Text(
-                                              service.serviceName!,
-                                              style: const TextStyle(fontSize: 16),
-                                            ),
-                                            trailing: Text(
-                                              service.price!.toStringAsFixed(2),
-                                              style: const TextStyle(
-                                                  color: ColorsConstants.grey,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
-                                  validator: Validatorless.required('Campo obrigatório'),
-                                );
+                            child: DropdownButtonFormField<SalonService>(
+                              decoration: const InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 10),
+                                // labelText: 'Serviço',
+                                // labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
+                              ),
+                              hint: const Text(
+                                'Serviços',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: ColorsConstants.grey,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              borderRadius: BorderRadius.circular(5),
+                              // controller: serviceEC,
+                              onChanged: (service) {
+                                scheduleClientServiceList.value.add(service!);
                               },
+                              items: [],
+                              // salonServices.map((service) {
+                              //   return DropdownMenuItem<SalonService>(
+                              //     value: service,
+                              //     child: ListTile(
+                              //       title: Text(
+                              //         service.serviceName!,
+                              //         style: const TextStyle(fontSize: 16),
+                              //       ),
+                              //       trailing: Text(
+                              //         service.price!.toStringAsFixed(2),
+                              //         style: const TextStyle(
+                              //           color: ColorsConstants.grey,
+                              //           fontSize: 16,
+                              //           fontWeight: FontWeight.w600,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   );
+                              // }).toList(),
+                              validator: Validatorless.required('Campo obrigatório'),
                             ),
                           ),
                           const SizedBox(width: 10),
@@ -349,62 +353,66 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                       const Text('SERVIÇOS:', style: TextStyle(fontSize: 13)),
                       const Divider(height: 12),
                       const SizedBox(height: 10),
-                      Positioned.fill(
-                        child: Expanded(
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: ColorsConstants.ligthPurple, width: 1),
-                              borderRadius: BorderRadius.circular(5),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: Positioned.fill(
+                              child: Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: ColorsConstants.ligthPurple, width: 1),
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Text(''),
+                                // child: const HsScheduleClientServices(),
+                              ),
                             ),
-                            child: const Expanded(child: HsScheduleClientServices()),
                           ),
-                        ),
+                        ],
                       ),
                       const SizedBox(height: 10),
                       Positioned.fill(
                         child: Align(
                           alignment: Alignment.bottomCenter,
-                          child: Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'VALOR TOTAL:',
-                                      style: TextStyle(
-                                        color: ColorsConstants.ligthPurple,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'VALOR TOTAL:',
+                                    style: TextStyle(
+                                      color: ColorsConstants.ligthPurple,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Text(
-                                      'R\$ 35,00',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 10),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: ColorsConstants.ligthGreen,
-                                    foregroundColor: ColorsConstants.purple,
                                   ),
-                                  child: const Text('AGENDAR'),
-                                  onPressed: () {
-                                    if (formKey.currentState!.validate()) {
-                                      Modular.to.pop();
-                                    }
-                                  },
+                                  Text(
+                                    'R\$ 35,00',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: ColorsConstants.ligthGreen,
+                                  foregroundColor: ColorsConstants.purple,
                                 ),
-                              ],
-                            ),
+                                child: const Text('AGENDAR'),
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    Modular.to.pop();
+                                  }
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       ),
