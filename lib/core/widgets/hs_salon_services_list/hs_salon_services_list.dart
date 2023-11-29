@@ -22,96 +22,92 @@ class _HsSalonServicesListState extends State<HsSalonServicesList> {
 
   @override
   Widget build(BuildContext context) {
-    return RxBuilder(
-      builder: (context) {
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            child: ListView.separated(
-              separatorBuilder: (context, index) => const Divider(),
-              itemCount: widget.salonServices.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: Text(
-                    '${widget.salonServices[index].serviceName}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  subtitle: Text(
-                    ('R\$ ${widget.salonServices[index].price!.toStringAsFixed(2)}'),
-                    style: const TextStyle(color: ColorsConstants.grey, fontSize: 15),
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      InkWell(
-                        splashColor: ColorsConstants.ligthPurple.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(5),
-                        child: HsIcons.editIcon,
-                        onTap: () async {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return HsAddServiceModal(
-                                isUpdatingService: true,
-                                salonServiceId: widget.salonServices[index].id,
-                              );
-                            },
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: ListView.separated(
+          separatorBuilder: (context, index) => const Divider(),
+          itemCount: widget.salonServices.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              contentPadding: const EdgeInsets.all(0),
+              title: Text(
+                '${widget.salonServices[index].serviceName}',
+                style: const TextStyle(fontSize: 18),
+              ),
+              subtitle: Text(
+                ('R\$ ${widget.salonServices[index].price!.toStringAsFixed(2)}'),
+                style: const TextStyle(color: ColorsConstants.grey, fontSize: 15),
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    splashColor: ColorsConstants.ligthPurple.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(5),
+                    child: HsIcons.editIcon,
+                    onTap: () async {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return HsAddServiceModal(
+                            isUpdatingService: true,
+                            salonServiceId: widget.salonServices[index].id,
                           );
                         },
-                      ),
-                      const SizedBox(width: 10),
-                      InkWell(
-                        splashColor: ColorsConstants.ligthPurple.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(5),
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                                title: const Text(
-                                  'Excluir serviço',
-                                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                      );
+                    },
+                  ),
+                  const SizedBox(width: 10),
+                  InkWell(
+                    splashColor: ColorsConstants.ligthPurple.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(5),
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            backgroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                            title: const Text(
+                              'Excluir serviço',
+                              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                            ),
+                            content: const Text('Confirma a exclusão do serviço?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text(
+                                  'CANCELAR',
+                                  style: TextStyle(color: ColorsConstants.purple),
                                 ),
-                                content: const Text('Confirma a exclusão do serviço?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text(
-                                      'CANCELAR',
-                                      style: TextStyle(color: ColorsConstants.purple),
-                                    ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      await service.deleteSalonService(widget.salonServices[index]);
-                                      await service.fetchSalonServices();
-                                      Modular.to.pop();
-                                    },
-                                    child: const Text(
-                                      'CONFIRMAR',
-                                      style: TextStyle(color: ColorsConstants.red),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  await service.deleteSalonService(widget.salonServices[index]);
+                                  await service.fetchSalonServices();
+                                  Modular.to.pop();
+                                },
+                                child: const Text(
+                                  'CONFIRMAR',
+                                  style: TextStyle(color: ColorsConstants.red),
+                                ),
+                              ),
+                            ],
                           );
                         },
-                        child: HsIcons.deleteIcon,
-                      ),
-                    ],
+                      );
+                    },
+                    child: HsIcons.deleteIcon,
                   ),
-                );
-              },
-            ),
-          ),
-        );
-      },
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

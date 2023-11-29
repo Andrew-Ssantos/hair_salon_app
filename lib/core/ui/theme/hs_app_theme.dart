@@ -11,6 +11,8 @@ sealed class HsAppTheme {
     useMaterial3: true,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.white,
+      shadowColor: Colors.white,
+      surfaceTintColor: Colors.white,
       centerTitle: true,
       titleTextStyle: TextStyle(fontSize: 18, color: Colors.black),
     ),

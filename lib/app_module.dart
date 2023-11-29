@@ -14,6 +14,7 @@ class AppModule extends Module {
   @override
   List<Module> get imports => [
         SalonServicesModule(),
+        ScheduleModule(),
       ];
 
   @override
