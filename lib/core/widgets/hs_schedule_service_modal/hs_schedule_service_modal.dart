@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/features/schedule/controller/schedule_client_controller.dart';
 
+enum Type { adding, updating }
+
 class HsScheduleServiceModal extends StatelessWidget {
+  int? id;
   final String serviceName;
   final double price;
-  final int index;
+  int? index;
+  final Type type;
 
-  const HsScheduleServiceModal({
+  HsScheduleServiceModal({
     super.key,
+    this.id,
     required this.serviceName,
     required this.price,
-    required this.index,
+    this.index,
+    required this.type,
   });
 
   @override
@@ -62,8 +69,19 @@ class HsScheduleServiceModal extends StatelessWidget {
         ),
         TextButton(
           onPressed: () async {
-            await scheduleClientController.updateSalonService(index, double.parse(priceEC.text));
-            Modular.to.pop();
+            switch (type) {
+              case Type.adding:
+                await scheduleClientController.addSalonService(
+                  SalonService()
+                    ..id = id!
+                    ..serviceName = serviceNameEC.text.replaceAll(':', '')
+                    ..price = double.parse(priceEC.text),
+                );
+                Modular.to.pop();
+              case Type.updating:
+                await scheduleClientController.updateSalonService(index!, double.parse(priceEC.text));
+                Modular.to.pop();
+            }
           },
           child: const Text('Salvar'),
         )

@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_schedule_service_modal/hs_schedule_service_modal.dart';
+import 'package:hair_salon_app/core/widgets/hs_warning_modal/hs_warning_modal.dart';
 import 'package:hair_salon_app/features/schedule/atom/schedule_client_atom.dart';
 import 'package:hair_salon_app/features/schedule/controller/schedule_client_controller.dart';
 import 'package:hair_salon_app/features/schedule/presenter/state/schedule_salon_services_state.dart';
@@ -18,7 +19,10 @@ class HsScheduleClientServices extends StatefulWidget {
 class _HsScheduleClientServicesState extends State<HsScheduleClientServices> {
   final scheduleClientController = Modular.get<ScheduleClientController>();
 
-  Widget _emptyList() => const Center(child: Text('Sem serviços adicionados \nAdicione pelo menos um!'));
+  Widget _emptyList() => const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Text('Nenhum serviço adicionado'), Text('Adicione pelo menos um serviço!')],
+      );
 
   _showAlertError(String message) {
     return showDialog(
@@ -53,7 +57,10 @@ class _HsScheduleClientServicesState extends State<HsScheduleClientServices> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     InkWell(
-                      child: const Icon(Icons.edit, color: ColorsConstants.green),
+                      child: const Icon(
+                        Icons.edit,
+                        color: ColorsConstants.green,
+                      ),
                       onTap: () => showDialog(
                         context: context,
                         builder: (context) {
@@ -61,6 +68,7 @@ class _HsScheduleClientServicesState extends State<HsScheduleClientServices> {
                             serviceName: servicesList[index].serviceName!,
                             price: servicesList[index].price!,
                             index: index,
+                            type: Type.updating,
                           );
                         },
                       ),
@@ -92,7 +100,7 @@ class _HsScheduleClientServicesState extends State<HsScheduleClientServices> {
       ScheduleSalonServicesStateSuccess state => _buildData(state.data),
       ScheduleSalonServicesStateFail state => state.errorMessage == 'Erro: Serviço já incluído'
           ? _showAlertError(state.errorMessage)
-          : Center(child: Text(state.errorMessage))
+          : Center(child: Text(state.errorMessage)),
     };
   }
 }

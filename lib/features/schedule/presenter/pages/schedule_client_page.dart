@@ -6,6 +6,8 @@ import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_add_service_modal/hs_add_service_modal.dart';
 import 'package:hair_salon_app/core/widgets/hs_date_time_input/hs_date_time_input.dart';
 import 'package:hair_salon_app/core/widgets/hs_schedule_client_services/hs_schedule_client_services.dart';
+import 'package:hair_salon_app/core/widgets/hs_schedule_service_modal/hs_schedule_service_modal.dart';
+import 'package:hair_salon_app/core/widgets/hs_warning_modal/hs_warning_modal.dart';
 import 'package:hair_salon_app/features/salon_services/atom/salon_services_atom.dart';
 import 'package:hair_salon_app/features/schedule/atom/schedule_client_atom.dart';
 import 'package:hair_salon_app/features/schedule/controller/schedule_client_controller.dart';
@@ -107,11 +109,27 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                   isDense: false,
                                   borderRadius: BorderRadius.circular(5),
                                   onChanged: (service) {
-                                    scheduleClientController.addSalonService(service!);
+                                    String message = scheduleClientController.checkRepeatedService(service!.id);
+                                    if (message == '' || message.isEmpty) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return HsScheduleServiceModal(
+                                            id: service.id,
+                                            serviceName: service.serviceName!,
+                                            price: service.price!,
+                                            type: Type.adding,
+                                          );
+                                        },
+                                      );
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return HsWarningModal(message: message);
+                                          });
+                                    }
                                   },
-                                  // value: (selectedValue.price == 0 && selectedValue.serviceName == '')
-                                  //     ? null
-                                  //     : selectedValue,
                                   items: salonServicesList.value.map((service) {
                                     return DropdownMenuItem<SalonService>(
                                       value: service,

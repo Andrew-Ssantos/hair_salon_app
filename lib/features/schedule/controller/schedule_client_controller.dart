@@ -4,18 +4,17 @@ import 'package:hair_salon_app/features/schedule/atom/schedule_client_atom.dart'
 import 'package:hair_salon_app/features/schedule/presenter/state/schedule_salon_services_state.dart';
 
 class ScheduleClientController {
-  checkRepeatedService(SalonService service) {
-    print(scheduleClientServiceList.value.contains(service));
-    return switch (scheduleClientServiceList.value.contains(service)) {
-      true => scheduleSalonServicesState.setValue(ScheduleSalonServicesStateFail('Erro: Serviço já incluído')),
-      false => null
-    };
-    // ? scheduleSalonServicesState.setValue(ScheduleSalonServicesStateFail('Erro: Serviço já incluído'))
-    // : null;
+  checkRepeatedService(int id) {
+    final servicesOfList = scheduleClientServiceList.value.map((service) => service.id).toList();
+
+    if (scheduleClientServiceList.value.isNotEmpty && servicesOfList.contains(id)) {
+      return 'Serviço não pode ser repetido no mesmo agendamento.';
+    } else {
+      return '';
+    }
   }
 
   addSalonService(SalonService service) {
-    checkRepeatedService(service);
     scheduleSalonServicesState.setValue(ScheduleSalonServicesStateLoading());
     try {
       scheduleClientServiceList.value.add(service);
