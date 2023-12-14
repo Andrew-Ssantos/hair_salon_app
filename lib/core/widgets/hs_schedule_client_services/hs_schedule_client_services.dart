@@ -77,6 +77,7 @@ class _HsScheduleClientServicesState extends State<HsScheduleClientServices> {
                     InkWell(
                       child: const Icon(Icons.close, color: ColorsConstants.red),
                       onTap: () {
+                        scheduleClientController.subtractTotalValue(index);
                         scheduleClientController.deleteSalonService(servicesList[index]);
                       },
                     ),

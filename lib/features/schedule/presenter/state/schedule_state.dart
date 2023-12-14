@@ -5,8 +5,8 @@ sealed class ScheduleState {
 }
 
 class ScheduleStateSuccess extends ScheduleState {
-  final Schedule schedule;
-  ScheduleStateSuccess(this.schedule);
+  final List<Schedule> schedules;
+  ScheduleStateSuccess(this.schedules);
 }
 
 class ScheduleStateFail extends ScheduleState {

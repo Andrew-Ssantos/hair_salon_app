@@ -77,9 +77,13 @@ class HsScheduleServiceModal extends StatelessWidget {
                     ..serviceName = serviceNameEC.text.replaceAll(':', '')
                     ..price = double.parse(priceEC.text),
                 );
+                scheduleClientController.sumTotalValue();
+
                 Modular.to.pop();
               case Type.updating:
                 await scheduleClientController.updateSalonService(index!, double.parse(priceEC.text));
+                scheduleClientController.sumTotalValue();
+
                 Modular.to.pop();
             }
           },

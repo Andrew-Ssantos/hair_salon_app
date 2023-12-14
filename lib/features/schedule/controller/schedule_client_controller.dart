@@ -46,4 +46,14 @@ class ScheduleClientController {
       scheduleSalonServicesState.setValue(ScheduleSalonServicesStateFail('Erro ao atualizar serviço do agendamento'));
     }
   }
+
+  sumTotalValue() {
+    totalValue.value = 0.00;
+    final values = scheduleClientServiceList.value.map((e) => e.price);
+    totalValue.value += values.fold(0.00, (previousValue, element) => previousValue + element!);
+  }
+
+  subtractTotalValue(int index) {
+    totalValue.value -= scheduleClientServiceList.value[index].price!;
+  }
 }

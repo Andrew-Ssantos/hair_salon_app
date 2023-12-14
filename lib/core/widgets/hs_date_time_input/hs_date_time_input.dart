@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
+import 'package:hair_salon_app/features/schedule/atom/schedule_client_atom.dart';
 import 'package:intl/intl.dart';
 import 'package:validatorless/validatorless.dart';
 
@@ -56,6 +59,7 @@ class _HsDateTimeInputState extends State<HsDateTimeInput> {
     int hour = int.parse('${time.hour}');
     int minute = int.parse('${time.minute}');
 
+    initialHour.value = time;
     startHourEC.text = _convertTimeToString(hour, minute);
     if (minute == 30) {
       hour += 1;
@@ -63,6 +67,7 @@ class _HsDateTimeInputState extends State<HsDateTimeInput> {
     } else {
       minute = 30;
     }
+    finalHour.value = DateTime(time.year, time.month, time.day, hour, minute);
     endHourEC.text = _convertTimeToString(hour, minute);
   }
 
@@ -113,7 +118,10 @@ class _HsDateTimeInputState extends State<HsDateTimeInput> {
       initialEntryMode: DatePickerEntryMode.calendarOnly,
       initialDate: DateTime.now(),
     ).then(
-      (pickedDate) => dateEC.text = DateFormat('dd/MM/yyyy').format(pickedDate!),
+      (pickedDate) {
+        date.value = pickedDate!;
+        return dateEC.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+      },
     );
   }
 
@@ -141,10 +149,12 @@ class _HsDateTimeInputState extends State<HsDateTimeInput> {
                   } else {
                     final String initialTime = _convertTimeToString(time.hour, time.minute);
                     startHourEC.text = _checkTimeLessOrMore(initialTime, endHourEC.text, Time.initial);
+                    initialHour.value = time;
                   }
                 case false:
                   final String endTime = _convertTimeToString(time.hour, time.minute);
                   endHourEC.text = _checkTimeLessOrMore(startHourEC.text, endTime, Time.end);
+                  finalHour.value = time;
               }
             },
           );
@@ -160,73 +170,84 @@ class _HsDateTimeInputState extends State<HsDateTimeInput> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(
-          child: TextFormField(
-            readOnly: true,
-            textAlign: TextAlign.center,
-            textAlignVertical: TextAlignVertical.center,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.only(left: 10),
-              floatingLabelAlignment: FloatingLabelAlignment.center,
-              labelText: 'Selec. a data',
-              labelStyle: TextStyle(
-                fontSize: 14,
-                color: ColorsConstants.grey,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            controller: dateEC,
-            validator: Validatorless.required('Campo obrigatório'),
-            onTap: () async {
-              await _showDatePickerDialog(context);
-            },
-          ),
+        HsDateTimeTextFormField(
+          hint: 'Selec. a data',
+          label: 'Data',
+          controller: dateEC,
+          validator: Validatorless.required('Campo obrigatório'),
+          onTap: () async {
+            await _showDatePickerDialog(context);
+          },
         ),
         const SizedBox(width: 10),
-        Expanded(
-          child: TextFormField(
-            readOnly: true,
-            textAlign: TextAlign.center,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              labelText: 'Hora Inicial',
-              floatingLabelAlignment: FloatingLabelAlignment.center,
-              labelStyle: TextStyle(
-                fontSize: 14,
-                color: ColorsConstants.grey,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            controller: startHourEC,
-            validator: Validatorless.required('Campo obrigatório'),
-            onTap: () async {
-              await _showTimePickerDialog(context, true);
-            },
-          ),
+        HsDateTimeTextFormField(
+          hint: 'Hora Inicial',
+          label: 'Hora Inicial',
+          controller: startHourEC,
+          validator: Validatorless.required('Campo obrigatório'),
+          onTap: () async {
+            await _showTimePickerDialog(context, true);
+          },
         ),
         const SizedBox(width: 10),
-        Expanded(
-          child: TextFormField(
-            readOnly: true,
-            textAlign: TextAlign.center,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              labelText: 'Hora Final',
-              floatingLabelAlignment: FloatingLabelAlignment.center,
-              labelStyle: TextStyle(
-                fontSize: 14,
-                color: ColorsConstants.grey,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            controller: endHourEC,
-            validator: Validatorless.required('Campo obrigatório'),
-            onTap: () async {
-              await _showTimePickerDialog(context, false);
-            },
-          ),
-        ),
+        HsDateTimeTextFormField(
+          hint: 'Hora Final',
+          label: 'Hora Final',
+          controller: endHourEC,
+          validator: Validatorless.required('Campo obrigatório'),
+          onTap: () async {
+            await _showTimePickerDialog(context, false);
+          },
+        )
       ],
+    );
+  }
+}
+
+class HsDateTimeTextFormField extends StatelessWidget {
+  final String hint;
+  final String label;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final void Function()? onTap;
+
+  const HsDateTimeTextFormField({
+    super.key,
+    required this.hint,
+    required this.label,
+    required this.controller,
+    this.validator,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: TextFormField(
+        readOnly: true,
+        textAlign: TextAlign.center,
+        textAlignVertical: TextAlignVertical.center,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(0),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          floatingLabelAlignment: FloatingLabelAlignment.center,
+          hintText: hint,
+          hintStyle: const TextStyle(
+            fontSize: 14,
+            color: ColorsConstants.grey,
+            fontWeight: FontWeight.w400,
+          ),
+          labelText: label,
+          labelStyle: const TextStyle(
+            fontSize: 14,
+            color: ColorsConstants.grey,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+        controller: controller,
+        validator: validator,
+        onTap: onTap,
+      ),
     );
   }
 }

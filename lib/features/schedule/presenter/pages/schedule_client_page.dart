@@ -1,7 +1,10 @@
 import 'package:asp/asp.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/core/db/collections/salon_service.dart';
+import 'package:hair_salon_app/core/db/collections/schedule.dart';
 import 'package:hair_salon_app/core/ui/constants.dart';
 import 'package:hair_salon_app/core/widgets/hs_add_service_modal/hs_add_service_modal.dart';
 import 'package:hair_salon_app/core/widgets/hs_date_time_input/hs_date_time_input.dart';
@@ -28,15 +31,12 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
   final serviceEC = TextEditingController();
   final valueEC = TextEditingController();
 
-  // final SalonService selectedValue = SalonService()
-  //   ..price = 0
-  //   ..serviceName = '';
-
   final scheduleClientController = Modular.get<ScheduleClientController>();
 
   @override
   void dispose() {
     scheduleClientServiceList.value.clear();
+    totalValue.value = 0.00;
     clientEC.clear();
     whatsappEC.clear();
     super.dispose();
@@ -60,10 +60,11 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                   child: Column(
                     children: [
                       TextFormField(
+                        inputFormatters: [LengthLimitingTextInputFormatter(60)],
                         decoration: const InputDecoration(
                           // icon: Icon(Icons.person),
                           contentPadding: EdgeInsets.only(left: 10),
-                          labelText: 'Cliente',
+                          labelText: 'Nome do cliente',
                           labelStyle: TextStyle(fontSize: 15, color: ColorsConstants.grey),
                         ),
                         controller: clientEC,
@@ -73,12 +74,17 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                       HsDateTimeInput(context: context, date: widget.date),
                       const SizedBox(height: 10),
                       TextFormField(
+                        inputFormatters: [
+                          LengthLimitingTextInputFormatter(20),
+                          FilteringTextInputFormatter.digitsOnly,
+                          TelefoneInputFormatter(),
+                        ],
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                           contentPadding: EdgeInsets.only(left: 10),
                           labelText: 'Whatsapp',
                           labelStyle: TextStyle(fontSize: 14, color: ColorsConstants.grey),
-                          hintText: '(Apenas números)',
+                          hintText: '(XX) XXXXX-XXXX',
                           hintStyle:
                               TextStyle(fontSize: 14, color: ColorsConstants.ligthGrey, fontWeight: FontWeight.normal),
                         ),
@@ -124,28 +130,16 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                       );
                                     } else {
                                       showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return HsWarningModal(message: message);
-                                          });
+                                        context: context,
+                                        builder: (context) {
+                                          return HsWarningModal(message: message);
+                                        },
+                                      );
                                     }
                                   },
                                   items: salonServicesList.value.map((service) {
                                     return DropdownMenuItem<SalonService>(
                                       value: service,
-                                      // onTap: () {
-                                      //   showDialog(
-                                      //     context: context,
-                                      //     builder: (context) {
-                                      //       return HsScheduleServiceModal(
-                                      //         serviceName: service.serviceName!,
-                                      //         price: service.price!,
-                                      //         index: index,
-                                      //       );
-                                      //     },
-                                      //   );
-                                      //   setState(() {});
-                                      // },
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
@@ -168,7 +162,8 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                       ),
                                     );
                                   }).toList(),
-                                  validator: Validatorless.required('Campo obrigatório'),
+                                  validator: (_) =>
+                                      scheduleClientServiceList.value.isEmpty ? 'Inclua um serviço!' : null,
                                 );
                               },
                             ),
@@ -222,7 +217,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   'VALOR TOTAL:',
                                   style: TextStyle(
                                     color: ColorsConstants.ligthPurple,
@@ -230,12 +225,18 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text(
-                                  'R\$ 35,00',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                RxBuilder(
+                                  builder: (context) {
+                                    return Text(
+                                      "R\$ ${totalValue.value.toStringAsFixed(2)}",
+                                      textAlign: TextAlign.end,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -248,7 +249,18 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                               child: const Text('AGENDAR'),
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
-                                  Modular.to.pop();
+                                  final String whatsappNumber = whatsappEC.text.replaceAll(RegExp(r'\D'), '');
+                                  final scheduledClient = Schedule()
+                                    ..clientName = clientEC.text
+                                    ..date = date.value
+                                    ..startHour = initialHour.value
+                                    ..endHour = finalHour.value
+                                    ..whatsappNumber = whatsappNumber
+                                    // ..services.
+                                    ..price = totalValue.value;
+
+                                  print(scheduledClient.services);
+                                  // Modular.to.pop();
                                 }
                               },
                             ),

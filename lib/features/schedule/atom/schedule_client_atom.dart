@@ -4,3 +4,8 @@ import 'package:hair_salon_app/features/schedule/presenter/state/schedule_salon_
 
 final scheduleClientServiceList = Atom<List<SalonService>>([]);
 final scheduleSalonServicesState = Atom<ScheduleSalonServicesState>(ScheduleSalonServicesStateEmpty());
+
+final date = Atom<DateTime>(DateTime.now());
+final initialHour = Atom<DateTime>(DateTime.now());
+final finalHour = Atom<DateTime>(DateTime.now());
+final totalValue = Atom<double>(0.00);

@@ -19,14 +19,14 @@ class Database {
   Future<void> addSalonService(SalonService newService) async {
     final db = await connectDB();
 
-    final salonService = db.salonServices;
     await db.writeTxn(() async {
-      await salonService.put(newService);
+      await db.salonServices.put(newService);
     });
   }
 
   Future<void> updateSalonService(SalonService service) async {
     final db = await connectDB();
+
     await db.writeTxn(() async {
       await db.salonServices.put(service);
     });
@@ -34,9 +34,8 @@ class Database {
 
   Future<void> deleteSalonService(SalonService service) async {
     final db = await connectDB();
-    final salonService = db.salonServices;
     await db.writeTxn(() async {
-      await salonService.delete(service.id);
+      await db.salonServices.delete(service.id);
     });
   }
 
@@ -48,5 +47,39 @@ class Database {
   Future<List<SalonService>> findAllSalonServices() async {
     final db = await connectDB();
     return await db.salonServices.where().findAll();
+  }
+
+  Future<void> addScheduledClient(Schedule newSchedule) async {
+    final db = await connectDB();
+
+    await db.writeTxn(() async {
+      await db.schedules.put(newSchedule);
+    });
+  }
+
+  Future<void> updateScheduledClient(Schedule schedule) async {
+    final db = await connectDB();
+
+    await db.writeTxn(() async {
+      await db.schedules.put(schedule);
+    });
+  }
+
+  Future<void> delete(Schedule schedule) async {
+    final db = await connectDB();
+
+    await db.writeTxn(() async {
+      await db.schedules.delete(schedule.id);
+    });
+  }
+
+  Future<Schedule?> findSingleScheduledClient(int id) async {
+    final db = await connectDB();
+    return await db.schedules.get(id);
+  }
+
+  Future<List<Schedule>> findAllScheduledClients() async {
+    final db = await connectDB();
+    return await db.schedules.where().findAll();
   }
 }

@@ -57,6 +57,14 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.1"
+  brasil_fields:
+    dependency: "direct main"
+    description:
+      name: brasil_fields
+      sha256: "6b04a76cff0105368504e4b8e55552ffbcaf50b46822794b3ec622026430d60d"
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.14.1"
   build:
     dependency: transitive
     description:
