@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:calendar_view/calendar_view.dart';
 import 'package:hair_salon_app/core/db/collections/schedule.dart';
 import 'package:hair_salon_app/core/db/database.dart';
 import 'package:hair_salon_app/features/schedule/atom/schedule_atom.dart';
@@ -14,7 +15,7 @@ class ScheduleController {
 
     try {
       final schedules = await db.findAllScheduledClients();
-      schedulesList.value.addAll(schedules);
+      schedulesList.value.addAll(schedules.where((element) => element.date == DateTime.now().withoutTime));
       scheduleListState.setValue(ScheduledClientDataStateSuccess(schedulesList.value));
     } on Exception catch (e, s) {
       log('Erro ao carregar agendamentos', error: e, stackTrace: s);

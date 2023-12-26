@@ -14,6 +14,7 @@ import 'package:hair_salon_app/core/widgets/hs_warning_modal/hs_warning_modal.da
 import 'package:hair_salon_app/features/salon_services/atom/salon_services_atom.dart';
 import 'package:hair_salon_app/features/schedule/atom/schedule_client_atom.dart';
 import 'package:hair_salon_app/features/schedule/controller/schedule_client_controller.dart';
+import 'package:hair_salon_app/features/schedule/controller/schedule_controller.dart';
 import 'package:validatorless/validatorless.dart';
 
 class ScheduleClientPage extends StatefulWidget {
@@ -32,6 +33,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
   final valueEC = TextEditingController();
 
   final scheduleClientController = Modular.get<ScheduleClientController>();
+  final scheduleController = Modular.get<ScheduleController>();
 
   @override
   void dispose() {
@@ -256,11 +258,15 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                     ..startHour = initialHour.value
                                     ..endHour = finalHour.value
                                     ..whatsappNumber = whatsappNumber
-                                    // ..services.
                                     ..price = totalValue.value;
 
-                                  print(scheduledClient.services);
-                                  // Modular.to.pop();
+                                  for (var i = 0; i < scheduleClientServiceList.value.length; i++) {
+                                    scheduledClient.services.add(scheduleClientServiceList.value[i]);
+                                  }
+
+                                  scheduleController.addScheduledClient(scheduledClient);
+                                  scheduleController.fetchAllScheduledClients();
+                                  Modular.to.pop();
                                 }
                               },
                             ),

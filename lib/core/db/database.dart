@@ -54,6 +54,7 @@ class Database {
 
     await db.writeTxn(() async {
       await db.schedules.put(newSchedule);
+      await newSchedule.services.save();
     });
   }
 

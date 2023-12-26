@@ -1,5 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hair_salon_app/features/schedule/controller/schedule_client_controller.dart';
+import 'package:hair_salon_app/features/schedule/controller/schedule_controller.dart';
 import 'package:hair_salon_app/features/schedule/presenter/pages/schedule_client_page.dart';
 import 'package:hair_salon_app/features/schedule/presenter/pages/schedule_page.dart';
 
@@ -8,6 +9,10 @@ class ScheduleModule extends Module {
   List<Bind> get binds => [
         Bind(
           (i) => ScheduleClientController(),
+          export: true,
+        ),
+        Bind(
+          (i) => ScheduleController(),
           export: true,
         )
       ];
