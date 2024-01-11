@@ -29,8 +29,8 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
   final formKey = GlobalKey<FormState>();
   final clientEC = TextEditingController();
   final whatsappEC = TextEditingController();
-  final serviceEC = TextEditingController();
-  final valueEC = TextEditingController();
+
+  bool checkBoxValue = false;
 
   final scheduleClientController = Modular.get<ScheduleClientController>();
   final scheduleController = Modular.get<ScheduleController>();
@@ -190,6 +190,20 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                         ],
                       ),
                       const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Checkbox(
+                              splashRadius: 0,
+                              value: checkBoxValue,
+                              onChanged: (bool? newValue) {
+                                setState(() {
+                                  checkBoxValue = newValue!;
+                                });
+                              }),
+                          const Text('Serviço Finalizado?')
+                        ],
+                      ),
+                      const SizedBox(height: 5),
                       const Divider(height: 12),
                       const Text('SERVIÇOS:', style: TextStyle(fontSize: 13)),
                       const Divider(height: 12),
@@ -249,7 +263,7 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                 foregroundColor: ColorsConstants.purple,
                               ),
                               child: const Text('AGENDAR'),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (formKey.currentState!.validate()) {
                                   final String whatsappNumber = whatsappEC.text.replaceAll(RegExp(r'\D'), '');
                                   final scheduledClient = Schedule()
@@ -258,14 +272,15 @@ class _ScheduleClientPageState extends State<ScheduleClientPage> {
                                     ..startHour = initialHour.value
                                     ..endHour = finalHour.value
                                     ..whatsappNumber = whatsappNumber
-                                    ..price = totalValue.value;
+                                    ..price = totalValue.value
+                                    ..isServiceFinished = checkBoxValue;
 
                                   for (var i = 0; i < scheduleClientServiceList.value.length; i++) {
                                     scheduledClient.services.add(scheduleClientServiceList.value[i]);
                                   }
 
-                                  scheduleController.addScheduledClient(scheduledClient);
-                                  scheduleController.fetchAllScheduledClients();
+                                  await scheduleController.addScheduledClient(scheduledClient);
+                                  await scheduleController.fetchAllScheduledClients();
                                   Modular.to.pop();
                                 }
                               },

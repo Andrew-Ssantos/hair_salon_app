@@ -29,15 +29,20 @@ class _SplashPageState extends State<SplashPage> {
     await scheduleController.fetchAllScheduledClients();
   }
 
+  _loadScheduledClients() async {
+    await scheduleController.mapScheduledClients();
+  }
+
   _loadMainData() async {
     splashState.setValue(SplashStateLoading());
     await Future.delayed(const Duration(seconds: 3));
     try {
       _fetchServicesList();
       _fetchScheduledClientsList();
+      _loadScheduledClients();
       splashState.setValue(SplashStateSuccess());
     } on Exception catch (e, s) {
-      log('Erro ao carregar lista de serviços', error: e, stackTrace: s);
+      log('Erro ao carregar dados do aplicativo', error: e, stackTrace: s);
       splashState.setValue(SplashStateFail('Erro ao carregar lista de serviços'));
     }
   }
